@@ -1,12 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm"
-import {INestApplicationContext, Logger} from "@nestjs/common";
-import {NestFactory} from "@nestjs/core";
-import {PropertyModule} from "../apps/property/src/property.module";
-import {PropertyService} from "../apps/property/src/property.service";
+import {Logger} from "@nestjs/common";
+
 import {Property} from "../libs/shared/src/entities/property.entity";
 import {fsReadFile} from "ts-loader/dist/utils";
-import {firstValueFrom, tap} from "rxjs";
-import mock = jest.mock;
 
 export class PopulatePropertyTable1704404746907 implements MigrationInterface {
 

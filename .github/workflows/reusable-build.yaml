@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: Build BE
-        run: npm install --omit=dev && npm run build && npm run zip
+      - name: Build BE # todo here --omit=dev could help
+        run: npm install && npm run build && npm run zip
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v3
