@@ -1,0 +1,17 @@
+name: Close pull request
+
+on:
+  pull_request:
+    types:
+      - closed
+  workflow_dispatch:
+
+jobs:
+  destroy:
+    name: Pull request destroy
+    uses: ./.github/workflows/reusable-destroy.yaml
+    with:
+      workspace: ${{ github.head_ref }}
+    secrets:
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}

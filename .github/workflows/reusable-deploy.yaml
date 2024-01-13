@@ -1,0 +1,82 @@
+on:
+  workflow_call:
+    inputs:
+      workspace:
+        required: true
+        type: string
+      aws_aurora_resource_arn:
+        required: true
+        type: string
+      aws_aurora_secret_manager_arn:
+        required: true
+        type: string
+      aws_aurora_database_name:
+        required: true
+        type: string
+    secrets:
+      aws-secret-access-key:
+        required: true
+      aws-access-key-id:
+        required: true
+#      cloudfront-target:
+#        required: true
+
+
+jobs:
+  deploy-be:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infrastructure
+    env:
+      DOWNLOAD_PATH: artifacts
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get build zip
+        id: download
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-artifact-be
+          path: ${{ env.DOWNLOAD_PATH }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.2
+
+      - name: Terraform Prepare
+        run: |
+          terraform init
+          terraform validate
+          terraform workspace select -or-create ${{ inputs.workspace }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
+      - name: Terraform Apply
+        run: |
+          terraform plan -lock=false -var="lambda_payload_filename=../$DOWNLOAD_PATH/nest-lambda.zip" -out tf.plan
+          terraform apply -auto-approve tf.plan
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
+#  migrate:
+#    needs: deploy-be
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: ./
+#    steps:
+#
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 18
+#
+#      - name: Apply migrations
+#        run: npm install && npm run build && npm run migration:run
+
