@@ -24,7 +24,12 @@
     "migration:show": "npm run typeorm migration:show -- -d ./typeorm-migrations.config.ts",
     "migration:generate": "npm run typeorm -- -d ./typeorm-migrations.config.ts migration:generate ./migrations/$npm_config_name",
     "migration:create": "ts-node ./node_modules/typeorm/cli migration:create ./migrations/$npm_config_name",
-    "migration:revert": "npm run typeorm -d ./typeorm.config.ts migration:revert"
+    "migration:revert": "npm run typeorm -d ./typeorm.config.ts migration:revert",
+    "local:tf:init": "cd infrastructure && terraform init && terraform validate",
+    "local:tf:plan": "cd infrastructure && terraform workspace select $WORKSPACE && terraform plan -lock=false -var=\"lambda_payload_filename=../nest-lambda.zip\" -out tf.plan",
+    "local:tf:deploy": "cd infrastructure && terraform apply -auto-approve tf.plan",
+    "local:tf": "npm run local:tf:init && npm run local:tf:plan && npm run local:tf:deploy",
+    "local:tf:full": "npm run build && npm run zip && npm run local:tf:plan && npm run local:tf:deploy"
   },
   "dependencies": {
     "@codegenie/serverless-express": "^4.13.0",

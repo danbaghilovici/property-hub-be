@@ -56,8 +56,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
       - name: Terraform Apply
         run: |
-          terraform plan -lock=false -var="lambda_payload_filename=../$DOWNLOAD_PATH/nest-lambda.zip" -out tf.plan
-          terraform apply -auto-approve tf.plan
+          terraform plan -lock=false -var="lambda_payload_filename=../$DOWNLOAD_PATH/nest-lambda.zip" -out tf.plan >/dev/null
+          terraform apply -auto-approve tf.plan >/dev/null
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
