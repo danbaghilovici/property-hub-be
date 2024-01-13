@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["migrations/**","typeorm.config.ts"],
+  "exclude": ["test", "**/*spec.ts"]
+}

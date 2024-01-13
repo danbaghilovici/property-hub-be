@@ -1,0 +1,117 @@
+{
+  "propertyType": {
+    "id": 1,
+    "name": "Office"
+  },
+  "propertyStatus": [
+    {
+      "id": 1,
+      "name": "For Sale"
+    },
+    {
+      "id": 3,
+      "name": "Open House"
+    }
+  ],
+  "price": {
+    "from": "123",
+    "to": "123"
+  },
+  "city": {
+    "id": 2,
+    "name": "Chicago"
+  },
+  "zipCode": "12334",
+  "neighborhood": [
+    {
+      "id": 5,
+      "name": "Englewood",
+      "cityId": 2
+    }
+  ],
+  "street": [
+    {
+      "id": 10,
+      "name": "Englewood Street #2",
+      "cityId": 2,
+      "neighborhoodId": 5
+    }
+  ],
+  "bedrooms": {
+    "from": 2,
+    "to": 3
+  },
+  "bathrooms": {
+    "from": 2,
+    "to": 2
+  },
+  "garages": {
+    "from": 2,
+    "to": 2
+  },
+  "area": {
+    "from": "32",
+    "to": "12"
+  },
+  "yearBuilt": {
+    "from": "123",
+    "to": "123"
+  },
+  "features": [
+    {
+      "id": 1,
+      "name": "Air Conditioning",
+      "selected": false
+    },
+    {
+      "id": 2,
+      "name": "Barbeque",
+      "selected": false
+    },
+    {
+      "id": 3,
+      "name": "Dryer",
+      "selected": false
+    },
+    {
+      "id": 4,
+      "name": "Microwave",
+      "selected": false
+    },
+    {
+      "id": 5,
+      "name": "Refrigerator",
+      "selected": true
+    },
+    {
+      "id": 6,
+      "name": "TV Cable",
+      "selected": false
+    },
+    {
+      "id": 7,
+      "name": "Sauna",
+      "selected": false
+    },
+    {
+      "id": 8,
+      "name": "WiFi",
+      "selected": false
+    },
+    {
+      "id": 9,
+      "name": "Fireplace",
+      "selected": false
+    },
+    {
+      "id": 10,
+      "name": "Swimming Pool",
+      "selected": false
+    },
+    {
+      "id": 11,
+      "name": "Gym",
+      "selected": false
+    }
+  ]
+}

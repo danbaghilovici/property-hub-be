@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+//    "esModuleInterop": true,
+    "outDir": "../../dist/apps/gateway"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["test", "**/*spec.ts"]
+}
