@@ -40,3 +40,4 @@ package-lock.json
 infrastructure/.terraform
 infrastructure/.terraform.lock.hcl
 infrastructure/tf.plan
+nest-lambda.zip
