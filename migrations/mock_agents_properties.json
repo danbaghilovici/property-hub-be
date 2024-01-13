@@ -1,0 +1,14 @@
+[
+  {
+    "agentId": 10,
+    "propertyId": 1
+  },
+  {
+    "agentId": 10,
+    "propertyId": 2
+  },
+  {
+    "agentId": 11,
+    "propertyId": 3
+  }
+]
