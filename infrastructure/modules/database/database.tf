@@ -71,13 +71,13 @@ output "kms_iam_policy_arn" {
   value = aws_iam_policy.kms_iam_policy.arn
 }
 
-resource "aws_db_cluster_snapshot" "postgresql-cluster" {
+resource "aws_rds_cluster" "postgresql-cluster" {
   cluster_identifier      = "postgres-cluster-${terraform.workspace}"
-  engine                  = "postgres"
+  engine                  = "aurora-mysql"
   engine_mode = "provisioned"
   enable_http_endpoint = true
   engine_version = "15.3"
-  database_name           = "postgres"
+  database_name           = "mysql"
   master_username         = "master"
   manage_master_user_password= true
 #  master_user_secret_kms_key_id=aws_secretsmanager_secret.example.kms_key_id
@@ -95,11 +95,9 @@ resource "aws_db_cluster_snapshot" "postgresql-cluster" {
     max_capacity = 1.0
     min_capacity = 0.5
   }
-  db_cluster_identifier          = ""
-  db_cluster_snapshot_identifier = ""
 }
 
-resource "aws_db_instance" "postgres-instance" {
+resource "aws_rds_cluster_instance" "postgres-instance" {
   count = 1
   cluster_identifier = aws_rds_cluster.postgresql-cluster.id
   instance_class     = "db.serverless"

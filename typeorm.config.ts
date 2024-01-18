@@ -15,6 +15,9 @@ import {Agent} from "./libs/shared/src/entities/agent.entity";
 import {CreateAgentsPropertiesTable1704540455563} from "./migrations/1704540455563-CreateAgentsPropertiesTable";
 import {AgentProperty} from "./libs/shared/src/entities/agent_property.entity";
 import {PopulateAgentPropertyTable1704543258507} from "./migrations/1704543258507-PopulateAgentPropertyTable";
+import {PostgresConnectionOptions} from "typeorm/driver/postgres/PostgresConnectionOptions";
+import {AuroraMysqlConnection} from "typeorm/driver/aurora-mysql/AuroraMysqlConnection";
+import {AuroraMysqlConnectionOptions} from "typeorm/driver/aurora-mysql/AuroraMysqlConnectionOptions";
 
 const logger: Logger = new Logger("typeorm.config.ts")
 config({path: ".env/local.env"})
@@ -31,9 +34,9 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
 
 export const typeOrmConfig: DataSource = new DataSource({...getData(configService)});
 
-function getData(configService:ConfigService):AuroraPostgresConnectionOptions {
+function getData(configService:ConfigService):AuroraMysqlConnectionOptions {
     return {
-        type: "aurora-postgres",
+        type: "aurora-mysql",
         region: configService.getOrThrow("AWS_REGION"),
         resourceArn: configService.getOrThrow("AWS_AURORA_RESOURCE_ARN"),
         secretArn: configService.getOrThrow("AWS_AURORA_SECRET_MANAGER_ARN"),
