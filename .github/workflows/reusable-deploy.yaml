@@ -46,7 +46,7 @@ jobs:
       - name: Terraform Apply
         id: deployment
         run: |
-          terraform plan -lock=false -var="lambda_payload_filename=../$DOWNLOAD_PATH/nest-lambda.zip" -out tf.plan
+          terraform plan -lock=false -var="lambda_payload_filename=../$DOWNLOAD_PATH/nest-lambda.zip" -out tf.plan >/dev/null
           name=$(terraform output -raw database_name)
           username=$(terraform output -raw database_username)
           password=$(terraform output -raw database_password)
