@@ -1,5 +1,6 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Exclude, plainToClass} from "class-transformer";
+import {Property} from "../entities/property.entity";
 
 @Entity()
 export class Agent {
@@ -21,6 +22,9 @@ export class Agent {
         {name: Agent.ID_FIELD_NAME}
     )
     id: number;
+
+    @OneToMany(() => Property, (property)=>property.agent)
+    properties: Property[]
 
     @Column({name: Agent.FULL_NAME_FIELD_NAME})
     fullName: string;

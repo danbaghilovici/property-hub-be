@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 18
 
-      - name: Build BE # todo here --omit=dev could help
+      - name: Build BE # TODO here --omit=dev could help but refactor is needed on package side
         run: npm install && npm run build && npm run zip
 
       - name: Upload dist artifact

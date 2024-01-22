@@ -8,22 +8,6 @@ variable "aws_iam_policy_arn" {
   description = "The ARN of the IAM policy associated with the Lambda function"
 }
 
-variable "aws_rds_policy_arn" {
-  type        = string
-  description = "The ARN of the IAM policy associated with the Lambda function"
-}
-
-variable "aws_secretmanager_policy_arn" {
-  type        = string
-  description = "The ARN of the IAM policy associated with the Lambda function"
-}
-
-variable "aws_kms_policy_arn" {
-  type        = string
-  description = "The ARN of the IAM policy associated with the Lambda function"
-}
-
-
 
 variable "function_name" {
   type        = string
@@ -60,17 +44,31 @@ variable "memory_size" {
   description = "The amount of memory in MB allocated to the Lambda function"
 }
 
-variable "aurora_resource_arn" {
-  type = string
-  description = "AURORA POSTGRES ARN"
+variable "db_name" {
+  type        = string
+  sensitive   = true
+  description = "The database instance name"
 }
 
-variable "aurora_secret_manager_arn" {
-  type = string
-  description = "AURORA SECRET MANAGER ARN"
+variable "db_host" {
+  type        = string
+  sensitive   = true
+  description = "The database instance hostname"
 }
 
-variable "aurora_database_name" {
-  type = string
-  description = "AURORA DB name"
+variable "db_port" {
+  type        = string
+  sensitive   = true
+  description = "The database instance port "
+}
+
+variable "db_username" {
+  type        = string
+  sensitive   = true
+  description = "The database instance username"
+}
+variable "db_password" {
+  type        = string
+  sensitive   = true
+  description = "The database instance password"
 }

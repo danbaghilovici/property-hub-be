@@ -36,22 +36,13 @@ module "lambda" {
   aws_apigatewayv2_api_execution_arn = aws_apigatewayv2_api.property_hub_backend_api_gateway.execution_arn
   aws_apigatewayv2_api_id            = aws_apigatewayv2_api.property_hub_backend_api_gateway.id
   aws_iam_policy_arn                 = aws_iam_policy.property_hub_backend_iam_policy.arn
-  aws_rds_policy_arn                = module.database.rds_iam_policy_arn
-  aws_secretmanager_policy_arn      = module.database.secretmanager_iam_policy_arn
-  aws_kms_policy_arn                = module.database.kms_iam_policy_arn
 
-  aurora_resource_arn               = module.database.aws_rds_cluster_data.arn
-  aurora_secret_manager_arn         = module.database.aws_rds_cluster_data.master_user_secret[0].secret_arn
-  aurora_database_name              = module.database.aws_rds_cluster_data.database_name
+  db_name                 = module.database.db_instance.value.db_name
+  db_host                 = module.database.db_instance.value.endpoint
+  db_port                 = module.database.db_instance.value.port
+  db_username             = module.database.db_instance.value.username
+  db_password             = module.database.db_instance.value.password
 }
-#
-#data "aws_rds_cluster" "mydbcluster" {
-#  cluster_identifier = aws_rds_cluster.postgresql.cluster_identifier
-#}
-#
-#output "cluster_output" {
-#  value = data.aws_rds_cluster.mydbcluster.master_user_secret[0].secret_arn
-#}
 
 
 # defines an API Gateway API that routes requests to the Lambda functions.

@@ -61,22 +61,25 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
-#  migrate:
-#    needs: deploy-be
-#    runs-on: ubuntu-latest
-#    defaults:
-#      run:
-#        working-directory: ./
-#    steps:
-#
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Node.js
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: 18
-#
-#      - name: Apply migrations
-#        run: npm install && npm run build && npm run migration:run
+  migrate:
+    needs: deploy-be
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Apply migrations
+        run: npm install && npm run migration:run
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
 
