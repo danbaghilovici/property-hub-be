@@ -48,7 +48,8 @@ jobs:
         run: |
           terraform plan -lock=false -var="lambda_payload_filename=../$DOWNLOAD_PATH/nest-lambda.zip" -out tf.plan
           x=$(terraform output -raw database_name)
-          echo "AWS_DATABASE_NAME<<${x}" >> "$GITHUB_ENV"
+          echo '${x}'
+          echo 'AWS_DATABASE_NAME=${x}' >> $GITHUB_ENV
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
