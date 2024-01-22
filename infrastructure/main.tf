@@ -38,7 +38,7 @@ module "lambda" {
   aws_iam_policy_arn                 = aws_iam_policy.property_hub_backend_iam_policy.arn
 
   db_name                 = module.database.db_instance.db_name
-  db_host                 = module.database.db_instance.endpoint
+  db_host                 = module.database.db_instance.address
   db_port                 = module.database.db_instance.port
   db_username             = module.database.db_instance.username
   db_password             = module.database.db_instance.password
@@ -107,6 +107,6 @@ output "database_port" {
 }
 
 output "database_host" {
-  value = module.database.db_instance.port
+  value = module.database.db_instance.address
   sensitive = true
 }
