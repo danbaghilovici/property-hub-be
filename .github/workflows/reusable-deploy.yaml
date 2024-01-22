@@ -52,7 +52,6 @@ jobs:
           password=$(terraform output -raw database_password)
           port=$(terraform output -raw database_port)
           host=$(terraform output -raw database_host)
-          echo ${name}
           echo 'AWS_DATABASE_NAME=${name}' >> $GITHUB_ENV
           echo "AWS_DATABASE_USERNAME=${username}" >> $GITHUB_ENV
           echo "AWS_DATABASE_PASSWORD=${password}" >> $GITHUB_ENV
