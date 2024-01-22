@@ -4,22 +4,11 @@ on:
       workspace:
         required: true
         type: string
-      aws_aurora_resource_arn:
-        required: true
-        type: string
-      aws_aurora_secret_manager_arn:
-        required: true
-        type: string
-      aws_aurora_database_name:
-        required: true
-        type: string
     secrets:
       aws-secret-access-key:
         required: true
       aws-access-key-id:
         required: true
-#      cloudfront-target:
-#        required: true
 
 
 jobs:
@@ -58,6 +47,10 @@ jobs:
         run: |
           terraform plan -lock=false -var="lambda_payload_filename=../$DOWNLOAD_PATH/nest-lambda.zip" -out tf.plan >/dev/null
           terraform apply -auto-approve tf.plan >/dev/null
+          echo "AWS_DATABASE_NAME=$(terraform output -raw database_creds)" >> $GITHUB_ENV
+          echo "AWS_DATABASE_USERNAME=$(terraform output -raw database_creds)" >> $GITHUB_ENV
+          echo "AWS_DATABASE_PASSWORD=$(terraform output -raw database_creds)" >> $GITHUB_ENV
+          echo "AWS_DATABASE_PORT=$(terraform output -raw database_creds)" >> $GITHUB_ENV
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}

@@ -20,18 +20,7 @@ config({path: ".env/local.env"})
 
 const configService = new ConfigService();
 
-export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
-    imports: [ConfigModule],
-    inject: [ConfigService],
-    useFactory: async (configService: ConfigService): Promise<TypeOrmModuleOptions> => {
-        return {
-            ...getData(configService),
-            autoLoadEntities:false
-        };
-    }
-}
-
-export const typeOrmConfig: DataSource = new DataSource({...getData(configService)});
+logger.log(getData(configService));
 
 function getData(configService:ConfigService):PostgresConnectionOptions {
     return {
@@ -63,3 +52,20 @@ function getData(configService:ConfigService):PostgresConnectionOptions {
     }
 
 }
+
+
+export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: async (configService: ConfigService): Promise<TypeOrmModuleOptions> => {
+        return {
+            ...getData(configService),
+            autoLoadEntities:false,
+            retryAttempts:3
+        };
+    }
+}
+
+export const typeOrmConfig: DataSource = new DataSource({...getData(configService)});
+
+

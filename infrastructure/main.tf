@@ -37,11 +37,11 @@ module "lambda" {
   aws_apigatewayv2_api_id            = aws_apigatewayv2_api.property_hub_backend_api_gateway.id
   aws_iam_policy_arn                 = aws_iam_policy.property_hub_backend_iam_policy.arn
 
-  db_name                 = module.database.db_instance.value.db_name
-  db_host                 = module.database.db_instance.value.endpoint
-  db_port                 = module.database.db_instance.value.port
-  db_username             = module.database.db_instance.value.username
-  db_password             = module.database.db_instance.value.password
+  db_name                 = module.database.db_instance.db_name
+  db_host                 = module.database.db_instance.endpoint
+  db_port                 = module.database.db_instance.port
+  db_username             = module.database.db_instance.username
+  db_password             = module.database.db_instance.password
 }
 
 
@@ -86,4 +86,27 @@ resource "aws_apigatewayv2_stage" "stage" {
 resource "aws_cloudwatch_log_group" "property_hub_backend_api_gateway_log_group" {
   name              = "/aws/api_gw/${aws_apigatewayv2_api.property_hub_backend_api_gateway.name}"
   retention_in_days = 30
+}
+
+output "database_name" {
+  value = module.database.db_instance.db_name
+  sensitive = true
+}
+output "database_username" {
+  value = module.database.db_instance.username
+  sensitive = true
+}
+
+output "database_password" {
+  value = module.database.db_instance.password
+  sensitive = true
+}
+output "database_port" {
+  value = module.database.db_instance.port
+  sensitive = true
+}
+
+output "database_host" {
+  value = module.database.db_instance.port
+  sensitive = true
 }
