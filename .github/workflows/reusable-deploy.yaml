@@ -47,19 +47,14 @@ jobs:
         id: deployment
         run: |
           terraform plan -lock=false -var="lambda_payload_filename=../$DOWNLOAD_PATH/nest-lambda.zip" -out tf.plan >/dev/null
-          name=$(terraform output -raw database_name)
-          username=$(terraform output -raw database_username)
-          password=$(terraform output -raw database_password)
-          port=$(terraform output -raw database_port)
-          host=$(terraform output -raw database_host)
-          echo 'AWS_DATABASE_NAME=${name}' >> $GITHUB_ENV
-          echo "AWS_DATABASE_USERNAME=${username}" >> $GITHUB_ENV
-          echo "AWS_DATABASE_PASSWORD=${password}" >> $GITHUB_ENV
-          echo "AWS_DATABASE_PORT=${port}" >> $GITHUB_ENV
-          echo "AWS_DATABASE_HOST=${host}" >> $GITHUB_ENV
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
+      - name: Terraform output
+        id: output
+        run: |
+          name=$(terraform output -raw database_name)
+          echo "AWS_DATABASE_HOST=${name}" >> $GITHUB_ENV
   migrate:
     needs: deploy-be
     runs-on: ubuntu-latest
@@ -81,9 +76,9 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
-          AWS_DATABASE_NAME: ${{ steps.deployment.outputs.AWS_DATABASE_NAME }}
-          AWS_DATABASE_USERNAME: ${{ steps.deployment.outputs.AWS_DATABASE_USERNAME }}
-          AWS_DATABASE_PASSWORD: ${{ steps.deployment.outputs.AWS_DATABASE_PASSWORD }}
-          AWS_DATABASE_PORT: ${{ steps.deployment.outputs.AWS_DATABASE_PORT }}
-          AWS_DATABASE_HOST: ${{ steps.deployment.outputs.AWS_DATABASE_HOST }}
+          AWS_DATABASE_NAME: ${{ steps.deployment.output.AWS_DATABASE_NAME }}
+          AWS_DATABASE_USERNAME: ${{ steps.deployment.output.AWS_DATABASE_USERNAME }}
+          AWS_DATABASE_PASSWORD: ${{ steps.deployment.output.AWS_DATABASE_PASSWORD }}
+          AWS_DATABASE_PORT: ${{ steps.deployment.output.AWS_DATABASE_PORT }}
+          AWS_DATABASE_HOST: ${{ steps.deployment.output.AWS_DATABASE_HOST }}
 
