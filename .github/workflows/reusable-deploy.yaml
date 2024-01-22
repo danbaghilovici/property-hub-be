@@ -53,8 +53,7 @@ jobs:
       - name: Terraform output
         id: output
         run: |
-          name=$(terraform output -raw database_name)
-          echo "AWS_DATABASE_HOST=${name}" >> $GITHUB_ENV
+          echo 'AWS_DATABASE_HOST=$(terraform output -raw database_name)' >> $GITHUB_ENV
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
