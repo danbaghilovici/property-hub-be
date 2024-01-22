@@ -55,6 +55,9 @@ jobs:
         run: |
           name=$(terraform output -raw database_name)
           echo "AWS_DATABASE_HOST=${name}" >> $GITHUB_ENV
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
   migrate:
     needs: deploy-be
     runs-on: ubuntu-latest
