@@ -56,7 +56,8 @@ jobs:
         id: tfout
         run: |
           name=$(terraform output -raw database_name)
-          echo 'AWS_DATABASE_NAME=${name}' >> $GITHUB_OUTPUT
+          echo $name
+          echo 'AWS_DATABASE_NAME=$name' >> $GITHUB_OUTPUT
           echo 'AWS_DATABASE_USERNAME=$(terraform output -raw database_username)' >> $GITHUB_OUTPUT
           echo 'AWS_DATABASE_PASSWORD=$(terraform output -raw database_password)' >> $GITHUB_OUTPUT
           echo 'AWS_DATABASE_PORT=$(terraform output -raw database_port)' >> $GITHUB_OUTPUT
