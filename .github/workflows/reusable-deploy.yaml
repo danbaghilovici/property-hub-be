@@ -19,6 +19,8 @@ jobs:
         working-directory: infrastructure
     env:
       DOWNLOAD_PATH: artifacts
+    outputs:
+      AWS_DATABASE_NAME: ${{ steps.tfout.outputs.AWS_DATABASE_NAME }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,10 +55,11 @@ jobs:
       - name: Terraform output
         id: tfout
         run: |
-          echo 'AWS_DATABASE_NAME=$(terraform output -raw database_name)' >> $GITHUB_ENV
-          echo 'AWS_DATABASE_USERNAME=$(terraform output -raw database_username)' >> $GITHUB_ENV
-          echo 'AWS_DATABASE_PASSWORD=$(terraform output -raw database_password)' >> $GITHUB_ENV
-          echo 'AWS_DATABASE_PORT=$(terraform output -raw database_port)' >> $GITHUB_ENV
+          echo 'AWS_DATABASE_NAME=$(terraform output -raw database_name)' >> $GITHUB_OUTPUT
+          echo 'AWS_DATABASE_USERNAME=$(terraform output -raw database_username)' >> $GITHUB_OUTPUT
+          echo 'AWS_DATABASE_PASSWORD=$(terraform output -raw database_password)' >> $GITHUB_OUTPUT
+          echo 'AWS_DATABASE_PORT=$(terraform output -raw database_port)' >> $GITHUB_OUTPUT
+          echo 'AWS_DATABASE_HOST=$(terraform output -raw database_host)' >> $GITHUB_OUTPUT
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
@@ -81,7 +84,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
-          AWS_DATABASE_NAME: ${{ env.AWS_DATABASE_NAME }}
+          AWS_DATABASE_NAME: ${{ needs.deploy-be.outputs.AWS_DATABASE_NAME }}
           AWS_DATABASE_USERNAME: ${{ env.AWS_DATABASE_USERNAME }}
           AWS_DATABASE_PASSWORD: ${{ env.AWS_DATABASE_PASSWORD }}
           AWS_DATABASE_PORT: ${{ env.AWS_DATABASE_PORT }}
