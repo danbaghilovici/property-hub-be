@@ -85,7 +85,7 @@ jobs:
           node-version: 18
 
       - name: Apply migrations
-        run: npm install && npm run migration:run
+        run: npm install && AWS_DATABASE_NAME=${{ needs.deploy-be.outputs.AWS_DATABASE_NAME }} npm run migration:run
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
