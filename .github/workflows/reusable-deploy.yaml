@@ -60,11 +60,11 @@ jobs:
           AWS_DATABASE_PASSWORD=$(terraform output -raw database_password)
           AWS_DATABASE_PORT=$(terraform output -raw database_port)
           AWS_DATABASE_HOST=$(terraform output -raw database_host)
-          echo "AWS_DATABASE_NAME=$AWS_DATABASE_NAME" >> $GITHUB_ENV
-          echo "AWS_DATABASE_USERNAME=$AWS_DATABASE_USERNAME" >> $GITHUB_ENV
-          echo "AWS_DATABASE_PASSWORD=$AWS_DATABASE_PASSWORD" >> $GITHUB_ENV
-          echo "AWS_DATABASE_PORT=$AWS_DATABASE_PORT" >> $GITHUB_ENV
-          echo "AWS_DATABASE_HOST=$AWS_DATABASE_HOST" >> $GITHUB_ENV
+          echo 'AWS_DATABASE_NAME=$AWS_DATABASE_NAME' >> $GITHUB_ENV
+          echo 'AWS_DATABASE_USERNAME=$AWS_DATABASE_USERNAME' >> $GITHUB_ENV
+          echo 'AWS_DATABASE_PASSWORD=$AWS_DATABASE_PASSWORD' >> $GITHUB_ENV
+          echo 'AWS_DATABASE_PORT=$AWS_DATABASE_PORT' >> $GITHUB_ENV
+          echo 'AWS_DATABASE_HOST=$AWS_DATABASE_HOST' >> $GITHUB_ENV
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
