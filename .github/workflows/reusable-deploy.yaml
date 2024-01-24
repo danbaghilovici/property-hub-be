@@ -19,8 +19,6 @@ jobs:
         working-directory: infrastructure
     env:
       DOWNLOAD_PATH: artifacts
-    outputs:
-      AWS_DATABASE_NAME: ${{ steps.tfout.outputs.AWS_DATABASE_NAME }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,50 +47,8 @@ jobs:
         id: deployment
         run: |
           terraform plan -lock=false -var="lambda_payload_filename=../$DOWNLOAD_PATH/nest-lambda.zip" -out tf.plan >/dev/null
+          terraform apply -auto-approve tf.plan >/dev/null
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
-      - name: Terraform output
-        id: tfout
-        run: |
-          AWS_DATABASE_NAME=$(terraform output -raw database_name)
-          AWS_DATABASE_USERNAME=$(terraform output -raw database_username)
-          AWS_DATABASE_PASSWORD=$(terraform output -raw database_password)
-          AWS_DATABASE_PORT=$(terraform output -raw database_port)
-          AWS_DATABASE_HOST=$(terraform output -raw database_host)
-          echo $AWS_DATABASE_NAME
-          echo 'AWS_DATABASE_NAME=$AWS_DATABASE_NAME' >> $GITHUB_ENV
-          echo 'AWS_DATABASE_USERNAME=$AWS_DATABASE_USERNAME' >> $GITHUB_ENV
-          echo 'AWS_DATABASE_PASSWORD=$AWS_DATABASE_PASSWORD' >> $GITHUB_ENV
-          echo 'AWS_DATABASE_PORT=$AWS_DATABASE_PORT' >> $GITHUB_ENV
-          echo 'AWS_DATABASE_HOST=$AWS_DATABASE_HOST' >> $GITHUB_ENV
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
-  migrate:
-    needs: deploy-be
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Apply migrations
-        run: npm install && AWS_DATABASE_NAME=${{ needs.deploy-be.outputs.AWS_DATABASE_NAME }} npm run migration:run
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
-          AWS_DATABASE_NAME: ${{ needs.deploy-be.outputs.AWS_DATABASE_NAME }}
-          AWS_DATABASE_USERNAME: ${{ env.AWS_DATABASE_USERNAME }}
-          AWS_DATABASE_PASSWORD: ${{ env.AWS_DATABASE_PASSWORD }}
-          AWS_DATABASE_PORT: ${{ env.AWS_DATABASE_PORT }}
-          AWS_DATABASE_HOST: ${{ env.AWS_DATABASE_HOST }}
 
