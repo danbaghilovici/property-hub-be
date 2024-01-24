@@ -19,24 +19,6 @@ resource "aws_iam_role_policy_attachment" "property_hub_backend_iam_role_policy_
   role       = aws_iam_role.property_hub_backend_iam_role.name
 }
 
-# attaches the IAM policy to the IAM role.
-resource "aws_iam_role_policy_attachment" "property_hub_rds_iam_role_policy_attachment" {
-  policy_arn = var.aws_rds_policy_arn
-  role       = aws_iam_role.property_hub_backend_iam_role.name
-}
-
-# attaches the IAM policy to the IAM role.
-resource "aws_iam_role_policy_attachment" "property_hub_secretmanager_iam_role_policy_attachment" {
-  policy_arn = var.aws_secretmanager_policy_arn
-  role       = aws_iam_role.property_hub_backend_iam_role.name
-}
-
-# attaches the IAM policy to the IAM role.
-resource "aws_iam_role_policy_attachment" "property_hub_kms_iam_role_policy_attachment" {
-  policy_arn = var.aws_kms_policy_arn
-  role       = aws_iam_role.property_hub_backend_iam_role.name
-}
-
 
 # defines a Lambda function that uses the Java runtime and points to our handler.
 resource "aws_lambda_function" "property_hub_backend_lambda" {
@@ -48,7 +30,14 @@ resource "aws_lambda_function" "property_hub_backend_lambda" {
   runtime          = "nodejs18.x"
   architectures    = ["x86_64"]
   timeout          = 30
-  environment { variables = { WORKSPACE : terraform.workspace , AWS_AURORA_RESOURCE_ARN:var.aurora_resource_arn, AWS_AURORA_SECRET_MANAGER_ARN:var.aurora_secret_manager_arn, AWS_AURORA_DATABASE_NAME:var.aurora_database_name } }
+  environment { variables = {
+    WORKSPACE : terraform.workspace ,
+    AWS_DATABASE_NAME: var.db_name,
+    AWS_DATABASE_HOST:var.db_host,
+    AWS_DATABASE_PORT:var.db_port,
+    AWS_DATABASE_USERNAME:var.db_username,
+    AWS_DATABASE_PASSWORD:var.db_password
+  } }
 
   publish     = true
   memory_size = var.memory_size

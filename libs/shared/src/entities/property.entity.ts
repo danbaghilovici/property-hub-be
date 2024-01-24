@@ -1,5 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, Index, Point} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, Index, Point, ManyToOne} from 'typeorm';
 import {Exclude, plainToClass} from "class-transformer";
+import {Agent} from "../entities/agent.entity";
 // import 'geojson';
 // import {Location} from "@nestjs/schematics";
 
@@ -143,6 +144,9 @@ export class Property {
         {name: Property.ID_FIELD_NAME}
     )
     id: number;
+
+    @ManyToOne(()=>Agent,(agent)=>agent.properties)
+    agent:Agent;
 
     @Column({name: Property.TITLE_FIELD_NAME})
     title: string;

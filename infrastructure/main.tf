@@ -17,68 +17,10 @@ resource "aws_iam_policy" "property_hub_backend_iam_policy" {
   })
 }
 
-resource "aws_iam_policy" "rds_iam_policy" {
-  # defines an IAM policy that allows Lambda to interact with rds
-  name = "property_hub-rds-${terraform.workspace}"
-  policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "rds-data:BeginTransaction",
-          "rds-data:ExecuteStatement",
-          "rds-data:CommitTransaction",
-          "rds-data:RollbackTransaction"
-        ],
-        "Resource": "${aws_rds_cluster.postgresql.arn}"
-      },
-      {
-        "Effect": "Allow",
-        "Action": "rds:ListTagsForResource",
-        "Resource": "${aws_rds_cluster.postgresql.arn}"
-      }
-    ]
-  }
-  )
+
+module "database" {
+  source = "./modules/database"
 }
-
-resource "aws_iam_policy" "secretmanager_iam_policy" {
-  # defines an IAM policy that allows Lambda to interact with rds
-  name = "property_hub-secretmanager-${terraform.workspace}"
-  policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Action": "secretsmanager:GetSecretValue",
-        "Resource": aws_rds_cluster.postgresql.master_user_secret[0].secret_arn
-      }
-    ]
-  }
-
-  )
-}
-
-resource "aws_iam_policy" "kms_iam_policy" {
-  # defines an IAM policy that allows Lambda to interact with rds
-  name = "property_hub-rds-kms-${terraform.workspace}"
-  policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "kms:Decrypt",
-          "kms:Encrypt"
-        ],
-        "Resource": aws_rds_cluster.postgresql.master_user_secret[0].kms_key_id
-      }
-    ]
-  })
-}
-
-
 
 module "lambda" {
   for_each = local.lambdas
@@ -94,22 +36,13 @@ module "lambda" {
   aws_apigatewayv2_api_execution_arn = aws_apigatewayv2_api.property_hub_backend_api_gateway.execution_arn
   aws_apigatewayv2_api_id            = aws_apigatewayv2_api.property_hub_backend_api_gateway.id
   aws_iam_policy_arn                 = aws_iam_policy.property_hub_backend_iam_policy.arn
-  aws_rds_policy_arn                =aws_iam_policy.rds_iam_policy.arn
-  aws_secretmanager_policy_arn      =aws_iam_policy.secretmanager_iam_policy.arn
-  aws_kms_policy_arn                =aws_iam_policy.kms_iam_policy.arn
 
-  aurora_resource_arn               = aws_rds_cluster.postgresql.arn
-  aurora_secret_manager_arn         = aws_rds_cluster.postgresql.master_user_secret[0].secret_arn
-  aurora_database_name              = aws_rds_cluster.postgresql.database_name
+  db_name                 = module.database.db_instance.db_name
+  db_host                 = module.database.db_instance.address
+  db_port                 = module.database.db_instance.port
+  db_username             = module.database.db_instance.username
+  db_password             = module.database.db_instance.password
 }
-#
-#data "aws_rds_cluster" "mydbcluster" {
-#  cluster_identifier = aws_rds_cluster.postgresql.cluster_identifier
-#}
-#
-#output "cluster_output" {
-#  value = data.aws_rds_cluster.mydbcluster.master_user_secret[0].secret_arn
-#}
 
 
 # defines an API Gateway API that routes requests to the Lambda functions.
@@ -153,4 +86,27 @@ resource "aws_apigatewayv2_stage" "stage" {
 resource "aws_cloudwatch_log_group" "property_hub_backend_api_gateway_log_group" {
   name              = "/aws/api_gw/${aws_apigatewayv2_api.property_hub_backend_api_gateway.name}"
   retention_in_days = 30
+}
+
+output "database_name" {
+  value = module.database.db_instance.db_name
+  sensitive = true
+}
+output "database_username" {
+  value = module.database.db_instance.username
+  sensitive = true
+}
+
+output "database_password" {
+  value = module.database.db_instance.password
+  sensitive = true
+}
+output "database_port" {
+  value = module.database.db_instance.port
+  sensitive = true
+}
+
+output "database_host" {
+  value = module.database.db_instance.address
+  sensitive = true
 }

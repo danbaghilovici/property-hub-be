@@ -19,9 +19,6 @@ jobs:
     uses: ./.github/workflows/reusable-deploy.yaml
     with:
       workspace: ${{ github.head_ref }}
-      aws_aurora_resource_arn: ${{ vars.AWS_AURORA_RESOURCE_ARN }}
-      aws_aurora_secret_manager_arn: ${{ vars.AWS_AURORA_SECRET_MANAGER_ARN }}
-      aws_aurora_database_name: ${{ vars.AWS_AURORA_DATABASE_NAME }}
     secrets:
       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
