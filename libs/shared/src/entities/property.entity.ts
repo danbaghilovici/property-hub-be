@@ -1,20 +1,19 @@
-import {Entity, Column, PrimaryGeneratedColumn, Index, Point, ManyToOne} from 'typeorm';
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    Index,
+    Point,
+    ManyToOne,
+    OneToMany,
+    JoinTable,
+    ManyToMany, JoinColumn
+} from 'typeorm';
 import {Exclude, plainToClass} from "class-transformer";
 import {Agent} from "../entities/agent.entity";
-// import 'geojson';
-// import {Location} from "@nestjs/schematics";
-
-export enum PropertyStatus {
-    FOR_RENT = "For Rent",
-    NO_FEES = "No Fees"
-}
-
-export enum PropertyType {
-    OFFICE = "Office",
-    APARTMENT = "Apartment"
-
-}
-
+import {Type} from "./type.entity";
+import {Status} from "./status.entity";
+import {Feature} from "../entities/feature.entity";
 
 @Entity()
 export class Property {
@@ -92,7 +91,7 @@ export class Property {
             this.title,
             this.desc,
             this.propertyType,
-            this.propertyStatus,
+            this.propertyStatuses,
 
         ]
     }
@@ -101,31 +100,6 @@ export class Property {
         return JSON.stringify(this);
     }
 
-    public static getPropertyTypeFromString(prop:string):PropertyType{
-        if (!prop){
-            return null;
-        }
-        switch (prop.toUpperCase()){
-            case PropertyType.OFFICE.toUpperCase():
-                return PropertyType.OFFICE;
-            case PropertyType.APARTMENT.toUpperCase():
-                return PropertyType.APARTMENT;
-            default:
-                return null;
-        }
-    }
-
-    public static getPropertyStatusFromString(prop:string):PropertyStatus{
-        if (!prop) return null;
-        switch (prop.toUpperCase()){
-            case PropertyStatus.NO_FEES.toUpperCase():
-                return PropertyStatus.NO_FEES;
-            case PropertyStatus.FOR_RENT.toUpperCase():
-                return PropertyStatus.FOR_RENT;
-            default:
-                return null;
-        }
-    }
 
     @Exclude()
     public static fromJson(json: Record<any, any>): Property {
@@ -134,18 +108,15 @@ export class Property {
         // console.log(json)
         // console.log(property);
         // property.location=p;
-        property.propertyType=PropertyType.OFFICE.toString();
-        property.propertyStatus=[PropertyStatus.NO_FEES.toString()];
+        // property.propertyType=PropertyType.OFFICE.toString();
+        // property.propertyStatus=json["propertyStatus"];
         return property;
     }
 
-    @PrimaryGeneratedColumn(
-        "increment",
-        {name: Property.ID_FIELD_NAME}
-    )
+    @PrimaryGeneratedColumn("increment", {name: Property.ID_FIELD_NAME})
     id: number;
 
-    @ManyToOne(()=>Agent,(agent)=>agent.properties)
+    @ManyToOne(()=>Agent,(agent)=>agent.properties,{nullable:false})
     agent:Agent;
 
     @Column({name: Property.TITLE_FIELD_NAME})
@@ -154,29 +125,26 @@ export class Property {
     @Column({name: Property.DESCRIPTION_FIELD_NAME})
     desc: string;
 
+    @ManyToOne(() => Type,(type)=>type.id,{cascade:true})
+    propertyType: Type;
 
-    @Column({
-        name: Property.PROPERTY_TYPE_FIELD_NAME,
-        type: "text",
-        // enum: PropertyType,
-        nullable:true
-    })
-    propertyType: string;
+    @ManyToMany(() => Status,(status)=>status.properties,{cascade:true})
+    @JoinTable()
+    propertyStatuses: Status[];
 
-    @Column( {type:"simple-array", name: Property.PROPERTY_STATUS_FIELD_NAME,nullable:true })
-    propertyStatus: string[];
-
-    @Column({name: Property.CITY_FIELD_NAME,nullable:true})
-    city: string;
-
-    @Column({name: Property.ZIP_CODE_FIELD_NAME,nullable:true})
-    zipCode: string;
-
-    @Column("simple-array", {name: Property.NEIGHBORHOOD_FIELD_NAME,nullable:true})
-    neighborhood: string[];
-
-    @Column("simple-array", {name: Property.STREET_FIELD_NAME,nullable:true})
-    street: string[];
+    // TODO must fix the geospatial storage
+    //  and location stuff
+    // @Column({name: Property.CITY_FIELD_NAME,nullable:true})
+    // city: string;
+    //
+    // @Column({name: Property.ZIP_CODE_FIELD_NAME,nullable:true})
+    // zipCode: string;
+    //
+    // @Column("simple-array", {name: Property.NEIGHBORHOOD_FIELD_NAME,nullable:true})
+    // neighborhood: string[];
+    //
+    // @Column("simple-array", {name: Property.STREET_FIELD_NAME,nullable:true})
+    // street: string[];
 
     // @Index({spatial: true})
     // @Column({
@@ -190,37 +158,28 @@ export class Property {
     //     name:Property.LOCATION_FIELD_NAME,
     //     spatialFeatureType: 'Point'
     // })
-    // TODO must fix the geospatial storage
-    @Column({name:Property.LOCATION_FIELD_NAME,type:"simple-json",nullable:true})
-    location: {
-        "lat": number,
-        "lng": number
-    };
 
+    // @Column({name:Property.LOCATION_FIELD_NAME,type:"simple-json",nullable:true})
+    // location: {
+    //     "lat": number,
+    //     "lng": number
+    // };
+    //
     @Column({
-        name: Property.FORMATTED_ADDRESS_FIELD_NAME,nullable:true
+        name: Property.FORMATTED_ADDRESS_FIELD_NAME
     })
     formattedAddress: string;
 
-    @Column("simple-array", {name: Property.FEATURES_FIELD_NAME,nullable:true})
-    features: string[];
 
+    @ManyToMany(() => Feature,(feature)=>feature.properties,{cascade:true})
+    @JoinTable()
+    features: Feature[];
+    //
     @Column({name: Property.FEATURED_FIELD_NAME,nullable:true})
     featured: boolean;
-
-    @Column({
-        name: Property.PRICE_DOLLAR_FIELD_NAME,
-        type: "simple-json",
-        nullable:true
-    })
-    priceDollar: PriceDollar;
-
-    @Column({
-        name: Property.PRICE_EURO_FIELD_NAME,
-        nullable:true,
-        type: "simple-json"
-    })
-    priceEuro: PriceEuro;
+    //
+    @Column({name: Property.PRICE_DOLLAR_FIELD_NAME,nullable:true})
+    price: number
 
     @Column({name: Property.BEDROOMS_FIELD_NAME,nullable:true})
     bedrooms: number;
@@ -231,30 +190,29 @@ export class Property {
     @Column({name: Property.GARAGES_FIELD_NAME,nullable:true})
     garages: number;
 
-    @Column({name: Property.AREA_FIELD_NAME, type: "simple-json",nullable:true})
-    area: Area;
+    @Column({name: Property.AREA_FIELD_NAME,nullable:true})
+    area: number;
 
     @Column({name: Property.YEAR_BUILT_FIELD_NAME,nullable:true})
     yearBuilt: number;
 
-    @Column({name: Property.RATINGS_COUNT_FIELD_NAME,nullable:true})
-    ratingsCount: number;
-
-    @Column({name: Property.RATINGS_VALUE_FIELD_NAME,nullable:true})
-    ratingsValue: number;
-
-    @Column({name: Property.ADDITIONAL_FEATURES_FIELD_NAME, type: "simple-json",nullable:true})
-    additionalFeatures: AdditionalFeature[];
-
-    @Column({name: Property.GALLERY_FIELD_NAME, type: "simple-json",nullable:true})
-    gallery: Gallery[];
-
-    @Column({name: Property.PLANS_FIELD_NAME, type: "simple-json",nullable:true})
-    plans: Plan[];
-
-    @Column({name: Property.VIDEOS_FIELD_NAME, type: "simple-json",nullable:true})
-    videos: Video[];
-
+    // TODO decide if keep this
+    // @Column({name: Property.RATINGS_COUNT_FIELD_NAME,nullable:true})
+    // ratingsCount: number;
+    //
+    // @Column({name: Property.RATINGS_VALUE_FIELD_NAME,nullable:true})
+    // ratingsValue: number;
+    //
+    // TODO decide what to do with this
+    // @Column({name: Property.GALLERY_FIELD_NAME, type: "simple-json",nullable:true})
+    // gallery: Gallery[];
+    //
+    // @Column({name: Property.PLANS_FIELD_NAME, type: "simple-json",nullable:true})
+    // plans: Plan[];
+    //
+    // @Column({name: Property.VIDEOS_FIELD_NAME, type: "simple-json",nullable:true})
+    // videos: Video[];
+    //
     @Column({name: Property.PUBLISHED_FIELD_NAME,nullable:true})
     published: string;
 
@@ -265,25 +223,7 @@ export class Property {
     views: number;
 }
 
-export interface PriceDollar {
-    sale: any
-    rent: number
-}
 
-export interface PriceEuro {
-    sale: any
-    rent: number
-}
-
-export interface Area {
-    value: number
-    unit: string
-}
-
-export interface AdditionalFeature {
-    name: string
-    value: string
-}
 
 export interface Gallery {
     small: string

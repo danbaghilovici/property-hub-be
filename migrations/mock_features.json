@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "AIR_CONDITIONING"
+  },
+  {
+    "id": 2,
+    "title": "BARBEQUE"
+  },
+  {
+    "id": 3,
+    "title": "DRYER"
+  },
+  {
+    "id": 4,
+    "title": "MICROWAVE"
+  },
+  {
+    "id": 5,
+    "title": "WIFI"
+  }
+]

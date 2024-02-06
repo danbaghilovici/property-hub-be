@@ -25,8 +25,7 @@
       ],
       "@app/shared/*": [
         "libs/shared/src/*"
-      ],
-      "@entities/*": ["libs/shared/src/entities/*.entity.ts"]
+      ]
     }
   }
 }

@@ -1,11 +1,11 @@
 [
   {
-    "agent": 10,
+    "agent": {"id": 1},
     "id": 1,
     "title": "Modern and quirky flat",
     "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-    "propertyType": "Apartment",
-    "propertyStatus": ["For Sale"],
+    "propertyType": {"id": 2},
+    "propertyStatus": [{"id": 5},{"id": 3}],
     "city": "New York",
     "zipCode": "10033",
     "neighborhood": ["Astoria", "Midtown"],
@@ -15,126 +15,24 @@
       "lng": -73.935100
     },
     "formattedAddress" : "611 W 180th St, New York, NY 10033, USA",
-    "features": ["Air Conditioning", "Barbeque", "Dryer", "Microwave", "Refrigerator", "Fireplace", "Swimming Pool", "TV Cable", "WiFi"],
     "featured": false,
-    "priceDollar": {
-      "sale": 1300000,
-      "rent": null
-    },
-    "priceEuro": {
-      "sale": 1160000,
-      "rent": null
-    },
+    "features": [{"id": 1}],
+    "price": 123,
     "bedrooms": 2,
     "bathrooms": 2,
     "garages": 1,
-    "area": {
-      "value": 2380,
-      "unit": "ft²"
-    },
     "yearBuilt": 2007,
-    "ratingsCount": 3,
-    "ratingsValue": 280,
-    "additionalFeatures": [
-      {
-        "name": "Heat",
-        "value": "Natural Gas"
-      },
-      {
-        "name": "Roof",
-        "value": "Composition/Shingle"
-      },
-      {
-        "name": "Floors",
-        "value": "Wall-to-Wall Carpet"
-      },
-      {
-        "name": "Water",
-        "value": "District/Public"
-      },
-      {
-        "name": "Cross Streets",
-        "value": "Orangethorpe-Gilbert"
-      },
-      {
-        "name": "Windows",
-        "value": "Skylights"
-      },
-      {
-        "name": "Flat",
-        "value": "5"
-      },
-      {
-        "name": "Childroom",
-        "value": "2"
-      }
-    ],
-    "gallery": [
-      {
-        "small": "assets/images/props/flat-1/1-small.jpg",
-        "medium": "assets/images/props/flat-1/1-medium.jpg",
-        "big": "assets/images/props/flat-1/1-big.jpg"
-      },
-      {
-        "small": "assets/images/props/flat-1/2-small.jpg",
-        "medium": "assets/images/props/flat-1/2-medium.jpg",
-        "big": "assets/images/props/flat-1/2-big.jpg"
-      },
-      {
-        "small": "assets/images/props/flat-1/3-small.jpg",
-        "medium": "assets/images/props/flat-1/3-medium.jpg",
-        "big": "assets/images/props/flat-1/3-big.jpg"
-      },
-      {
-        "small": "assets/images/props/flat-1/4-small.jpg",
-        "medium": "assets/images/props/flat-1/4-medium.jpg",
-        "big": "assets/images/props/flat-1/4-big.jpg"
-      }
-    ],
-    "plans": [
-      {
-        "name": "First floor",
-        "desc": "Plan description. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-        "area": {
-          "value": 1180,
-          "unit": "ft²"
-        },
-        "rooms": 3,
-        "baths": 1,
-        "image": "assets/images/others/plan-1.jpg"
-      },
-      {
-        "name": "Second floor",
-        "desc": "Plan description. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-        "area": {
-          "value": 1200,
-          "unit": "ft²"
-        },
-        "rooms": 5,
-        "baths": 2,
-        "image": "assets/images/others/plan-2.jpg"
-      }
-    ],
-    "videos": [
-      {
-        "name": "Video",
-        "link": "http://themeseason.com/data/videos/video-1.mp4"
-      },
-      {
-        "name": "Video with 'EmbedVideoService'",
-        "link": "https://www.youtube.com/watch?v=-NInBEdSvp8"
-      }
-    ],
     "published": "2012-08-12 17:17:30",
     "lastUpdate": "2019-05-20 14:20:00",
     "views": 322
   },
   {
+    "agent": 1,
     "id": 2,
     "title": "Centrally located office",
     "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-    "propertyType": "Office",
-    "propertyStatus": ["For Rent", "No Fees"],
+    "propertyType": 1,
+    "propertyStatus": [1, 2],
     "city": "Los Angeles",
     "zipCode": "90044",
     "neighborhood": ["Hollywood", "Highland Park"],
@@ -269,11 +167,12 @@
     "views": 408
   },
   {
+    "agent": 1,
     "id": 3,
     "title": "Comfortable family house",
     "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-    "propertyType": "House",
-    "propertyStatus": ["For Sale", "Open House"],
+    "propertyType": 3,
+    "propertyStatus": [5, 6],
     "city": "Seattle",
     "zipCode": "98104",
     "neighborhood": ["Belltown"],
@@ -408,11 +307,12 @@
     "views": 587
   },
   {
+    "agent": 1,
     "id": 4,
     "title": "Spacious and warm flat",
     "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-    "propertyType": "Apartment",
-    "propertyStatus": ["Hot Offer", "No Fees"],
+    "propertyType": 2,
+    "propertyStatus": [3,2],
     "city": "Chicago",
     "zipCode": "60604",
     "neighborhood": ["Riverdale"],
@@ -542,11 +442,12 @@
     "views": 754
   },
   {
+    "agent": 1,
     "id": 5,
     "title": "House with a pool",
     "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-    "propertyType": "House",
-    "propertyStatus": ["Sold", "For Sale"],
+    "propertyType": 3,
+    "propertyStatus": [4,5],
     "city": "Seattle",
     "zipCode": "98108",
     "neighborhood": ["Queen Anne", "Belltown"],
@@ -671,11 +572,12 @@
     "views": 633
   },
   {
+    "agent": 1,
     "id": 6,
     "title": "Bright and sunny house",
     "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-    "propertyType": "House",
-    "propertyStatus": ["For Rent", "No Fees"],
+    "propertyType": 3,
+    "propertyStatus": [1,2],
     "city": "Chicago",
     "zipCode": "60609",
     "neighborhood": ["Englewood", "Austin"],
@@ -800,11 +702,12 @@
     "views": 256
   },
   {
+    "agent": 1,
     "id": 7,
     "title": "Luxury office space",
     "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-    "propertyType": "Office",
-    "propertyStatus": ["For Sale", "Hot Offer"],
+    "propertyType": 1,
+    "propertyStatus": [5,6],
     "city": "New York",
     "zipCode": "10019",
     "neighborhood": ["Englewood", "Austin"],
@@ -939,11 +842,12 @@
     "views": 470
   },
   {
+    "agent": 1,
     "id": 8,
     "title": "Centrally located apartment",
     "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
-    "propertyType": "Apartment",
-    "propertyStatus": ["For Rent", "No Fees"],
+    "propertyType": 2,
+    "propertyStatus": [1,2],
     "city": "Los Angeles",
     "zipCode": "90028",
     "neighborhood": ["Englewood", "Austin"],

@@ -17,9 +17,10 @@ export class InstallExtensions1704402536478 implements MigrationInterface {
             "CREATE EXTENSION IF NOT EXISTS address_standardizer;"
         ]
 
-        await firstValueFrom(
+        return await firstValueFrom(
             concat(statements.map(value => defer(()=>queryRunner.query(value))))
             .pipe(tap((result) => this.logger.debug(JSON.stringify(result))))
+                .pipe(x=> defer(()=>queryRunner.connection.synchronize(false)))
         );
     }
 
