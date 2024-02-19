@@ -1,7 +1,7 @@
 import {Injectable, Logger} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
-import {Agent} from "@entities/agent";
+import {Agent} from "../../../libs/shared/src/entities/agent.entity";
 import {defer, Observable, tap} from "rxjs";
 
 @Injectable()
