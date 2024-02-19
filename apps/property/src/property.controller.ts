@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Logger, Param, ParseIntPipe, Post, Query} from '@nestjs/common';
+import {Body, Controller, Get, Logger, Param, ParseIntPipe, Post, Query, UseGuards} from '@nestjs/common';
 import { PropertyService } from './property.service';
 import {Observable} from "rxjs";
 import {Property} from "../../../libs/shared/src/entities/property.entity";
@@ -8,7 +8,9 @@ import {DecodingURIPipe} from "@app/shared/pipes/decoding/decode-uri-pipe.servic
 import {ParseJsonPipe} from "@app/shared/pipes/parse-json/parse-json.pipe";
 import {Status} from "../../../libs/shared/src/entities/status.entity";
 import {CreatePropertyDTO} from "./dto/CreatePropertyDTO";
+import {AuthGuard} from "../../../libs/auth/guards/auth/auth.guard";
 
+@UseGuards(AuthGuard)
 @Controller("properties")
 export class PropertyController {
 
