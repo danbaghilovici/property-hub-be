@@ -21,12 +21,17 @@
     "resolveJsonModule": true,
     "paths": {
       "@app/shared": [
-        "libs/shared/src",
+        "libs/shared/src"
       ],
       "@app/shared/*": [
         "libs/shared/src/*"
       ],
-      "@entities/*": ["libs/shared/src/entities/*.entity.ts"]
+      "@app/auth": [
+        "libs/auth/src"
+      ],
+      "@app/auth/*": [
+        "libs/auth/src/*"
+      ]
     }
   }
 }

@@ -1,11 +1,16 @@
-import {Body, Controller, Get, Logger, Param, ParseIntPipe, Query} from '@nestjs/common';
+import {Body, Controller, Get, Logger, Param, ParseIntPipe, Post, Query, UseGuards} from '@nestjs/common';
 import { PropertyService } from './property.service';
 import {Observable} from "rxjs";
-import {Property} from "@entities/property";
+import {Property} from "../../../libs/shared/src/entities/property.entity";
+import {Type} from "../../../libs/shared/src/entities/type.entity";
 import {PropertiesFiltersDto} from "./property-filters.dto";
 import {DecodingURIPipe} from "@app/shared/pipes/decoding/decode-uri-pipe.service";
 import {ParseJsonPipe} from "@app/shared/pipes/parse-json/parse-json.pipe";
+import {Status} from "../../../libs/shared/src/entities/status.entity";
+import {CreatePropertyDTO} from "./dto/CreatePropertyDTO";
+import {AuthGuard} from "../../../libs/auth/guards/auth/auth.guard";
 
+@UseGuards(AuthGuard)
 @Controller("properties")
 export class PropertyController {
 
@@ -14,14 +19,24 @@ export class PropertyController {
 
   @Get()
   getProperties(
-      @Query("filters",DecodingURIPipe,ParseJsonPipe)
-          propertiesFiltersDto:PropertiesFiltersDto):Observable<Property[]>{
+      @Query("filters",DecodingURIPipe,ParseJsonPipe) propertiesFiltersDto:PropertiesFiltersDto)
+      :Observable<Property[]>{
     return this.propertyService.getAvailableProperties(propertiesFiltersDto);
   }
 
-  @Get("by-agent/:agentId")
-  getPropertiesByAgent(@Param('agentId',ParseIntPipe) id: number):Observable<Property[]> {
-    // this.logger.log("aici cu param");
-    return this.propertyService.getPropertiesFromAgentId(id)
+  @Post()
+  addProperty(@Body() createPropertyDto:CreatePropertyDTO):Observable<Property>{
+    this.logger.debug("Received ",JSON.stringify(createPropertyDto));
+    return this.propertyService.addNewProperty(createPropertyDto);
+  }
+
+  @Get("types")
+  getPropertyTypes():Observable<Type[]>{
+    return this.propertyService.getAvailablePropertyTypes();
+  }
+
+  @Get("statuses")
+  getPropertyStatuses():Observable<Status[]>{
+    return this.propertyService.getAvailablePropertyStatuses();
   }
 }

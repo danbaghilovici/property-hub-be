@@ -13,7 +13,7 @@ import {
     tap
 } from "rxjs";
 import {NestApplicationContextOptions} from "@nestjs/common/interfaces/nest-application-context-options.interface";
-import {INestApplication, INestApplicationContext, Logger} from "@nestjs/common";
+import {INestApplication, INestApplicationContext, Logger, ValidationPipe} from "@nestjs/common";
 import {NestApplication, NestFactory} from "@nestjs/core";
 import process from "process";
 import {ExpressAdapter} from "@nestjs/platform-express";
@@ -67,6 +67,11 @@ function configureNestApplication(nestApp: INestApplication):Observable<INestApp
     });
     LOGGER.log("setting global prefix to '"+process.env.WORKSPACE+"'");
     nestApp.setGlobalPrefix(process.env.WORKSPACE);
+    nestApp.useGlobalPipes(new ValidationPipe({
+        enableDebugMessages:true,
+        disableErrorMessages:false,
+        transform:true,
+    }));
     return of(nestApp);
 
 }
