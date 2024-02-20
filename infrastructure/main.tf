@@ -46,6 +46,9 @@ module "lambda" {
   db_port                 = module.database.db_instance.port
   db_username             = module.database.db_instance.username
   db_password             = module.database.db_instance.password
+
+  user_pool = module.auth.cognito_user_pool
+  client_id = module.auth.cognito_pool_app_client
 }
 
 
@@ -91,26 +94,36 @@ resource "aws_cloudwatch_log_group" "property_hub_backend_api_gateway_log_group"
   name              = "/aws/api_gw/${aws_apigatewayv2_api.property_hub_backend_api_gateway.name}"
   retention_in_days = 30
 }
-
-output "database_name" {
-  value = module.database.db_instance.db_name
-  sensitive = true
-}
-output "database_username" {
-  value = module.database.db_instance.username
-  sensitive = true
-}
-
-output "database_password" {
-  value = module.database.db_instance.password
-  sensitive = true
-}
-output "database_port" {
-  value = module.database.db_instance.port
-  sensitive = true
-}
-
-output "database_host" {
-  value = module.database.db_instance.address
-  sensitive = true
-}
+#
+#output "database_name" {
+#  value = module.database.db_instance.db_name
+#  sensitive = true
+#}
+#output "database_username" {
+#  value = module.database.db_instance.username
+#  sensitive = true
+#}
+#
+#output "database_password" {
+#  value = module.database.db_instance.password
+#  sensitive = true
+#}
+#output "database_port" {
+#  value = module.database.db_instance.port
+#  sensitive = true
+#}
+#
+#output "database_host" {
+#  value = module.database.db_instance.address
+#  sensitive = true
+#}
+#
+#output "auth_pool" {
+#  value = module.auth.cognito_user_pool.value
+#  sensitive = true
+#}
+#
+#output "auth_client" {
+#  value = module.auth.cognito_pool_app_client.value
+#  sensitive = true
+#}

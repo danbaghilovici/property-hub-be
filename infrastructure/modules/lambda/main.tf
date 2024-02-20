@@ -36,7 +36,9 @@ resource "aws_lambda_function" "property_hub_backend_lambda" {
     AWS_DATABASE_HOST:var.db_host,
     AWS_DATABASE_PORT:var.db_port,
     AWS_DATABASE_USERNAME:var.db_username,
-    AWS_DATABASE_PASSWORD:var.db_password
+    AWS_DATABASE_PASSWORD:var.db_password,
+    AWS_AUTH_USER_POOL:var.user_pool,
+    AWS_AUTH_CLIENT_ID:var.client_id
   } }
 
   publish     = true

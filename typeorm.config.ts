@@ -40,7 +40,7 @@ function getData(configService:ConfigService):PostgresConnectionOptions {
             Feature
         ],
         logging: true,
-        synchronize: false,
+        synchronize: true,
         migrationsRun:false,
         migrationsTransactionMode:"all",
         // TODO figure out this

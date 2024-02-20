@@ -72,3 +72,15 @@ variable "db_password" {
   sensitive   = true
   description = "The database instance password"
 }
+
+variable "user_pool" {
+  type = string
+  sensitive=true
+  description = ""
+}
+
+variable "client_id" {
+  type = string
+  sensitive=true
+  description = ""
+}
