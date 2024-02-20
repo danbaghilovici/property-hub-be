@@ -22,6 +22,10 @@ module "database" {
   source = "./modules/database"
 }
 
+module "auth"{
+  source = "./modules/cognito"
+}
+
 module "lambda" {
   for_each = local.lambdas
   source   = "./modules/lambda"
