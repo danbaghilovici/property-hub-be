@@ -149,5 +149,6 @@ function boot(modelCls:any) {
     createNestApplication(modelCls,getDefaultApplicationOptions(),true).subscribe();
 }
 export function handleBooting(moduleCls:any){
+    console.log(process.env.AWS_EXECUTION_ENV);
     process.env.AWS_EXECUTION_ENV === "LOCAL" ? boot(moduleCls) : LOGGER.log("No need to boot");
 }

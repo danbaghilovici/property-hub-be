@@ -8,9 +8,8 @@ import {DecodingURIPipe} from "@app/shared/pipes/decoding/decode-uri-pipe.servic
 import {ParseJsonPipe} from "@app/shared/pipes/parse-json/parse-json.pipe";
 import {Status} from "../../../libs/shared/src/entities/status.entity";
 import {CreatePropertyDTO} from "./dto/CreatePropertyDTO";
-import {AuthenticationGuard} from "../../../libs/authentication/guards/authentication/authentication.guard";
+import {AuthGuard} from "@nestjs/passport";
 
-@UseGuards(AuthenticationGuard)
 @Controller("properties")
 export class PropertyController {
 
@@ -24,6 +23,7 @@ export class PropertyController {
     return this.propertyService.getAvailableProperties(propertiesFiltersDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   addProperty(@Body() createPropertyDto:CreatePropertyDTO):Observable<Property>{
     this.logger.debug("Received ",JSON.stringify(createPropertyDto));

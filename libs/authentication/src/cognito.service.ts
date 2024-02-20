@@ -1,7 +1,15 @@
 import {Injectable} from "@nestjs/common";
-import {CognitoUser, CognitoUserAttribute, CognitoUserPool, ISignUpResult} from "amazon-cognito-identity-js";
+import {
+    AuthenticationDetails,
+    CognitoUser,
+    CognitoUserAttribute,
+    CognitoUserPool,
+    ISignUpResult
+} from "amazon-cognito-identity-js";
 import {ConfigService} from "@nestjs/config";
 import {AuthRegisterUserDto} from "./models/auth.register.user.dto";
+import {AuthLoginUserDto} from "./models/auth.login.user.dto";
+import {AuthResponseTokenDto} from "./models/auth.response.token.dto";
 
 @Injectable()
 export class CognitoService {
@@ -30,6 +38,29 @@ export class CognitoService {
                     }
                 },
             );
+        });
+    }
+
+    public loginUser(authLoginUserDto: AuthLoginUserDto): Promise<AuthResponseTokenDto> {
+        const { email, password } = authLoginUserDto;
+        const userData = {Username: email, Pool: this.userPool};
+
+        const authenticationDetails = new AuthenticationDetails({Username: email, Password: password});
+
+        const userCognito = new CognitoUser(userData);
+
+        return new Promise((resolve, reject) => {
+            userCognito.authenticateUser(authenticationDetails, {
+                onSuccess: (result) => {
+                    resolve(new AuthResponseTokenDto(
+                        result.getAccessToken().getJwtToken(),
+                        result.getRefreshToken().getToken())
+                    );
+                },
+                onFailure: (err) => {
+                    reject(err);
+                },
+            });
         });
     }
 }

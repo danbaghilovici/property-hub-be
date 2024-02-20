@@ -16,7 +16,7 @@ import {ParseJsonPipe} from "@app/shared/pipes/parse-json/parse-json.pipe";
     ],
     exports: [SharedService,DecodingURIPipe,ParseJsonPipe],
     imports: [
-        ConfigModule.forRoot({isGlobal: true, envFilePath: ".env/local.env"}),
+        ConfigModule.forRoot({isGlobal: true, envFilePath: ".env/local.env",expandVariables:true}),
         TypeOrmModule.forRootAsync(typeOrmAsyncConfig)
     ]
 })

@@ -1,0 +1,14 @@
+{
+  "title": "Modern and quirky flat",
+  "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.",
+  "propertyTypeId": 2,
+  "propertyStatusIds": [5,3],
+  "formattedAddress" : "611 W 180th St, New York, NY 10033, USA",
+  "featured": false,
+  "featuresIds": [1],
+  "price": 123,
+  "bedrooms": 2,
+  "bathrooms": 2,
+  "garages": 2,
+  "yearBuilt": 2007
+}

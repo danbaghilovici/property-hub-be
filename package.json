@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build shared && nest build property && nest build agent && nest build gateway",
+    "build": "nest build shared && nest build property && nest build agent && nest build auth && nest build gateway",
     "zip": "./create_lambda_zip.sh",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
@@ -49,6 +49,7 @@
     "class-validator": "^0.14.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "dotenv-expand": "^11.0.6",
     "geojson": "^0.5.0",
     "jwks-rsa": "^3.1.0",
     "passport": "^0.7.0",

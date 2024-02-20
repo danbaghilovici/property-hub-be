@@ -19,7 +19,7 @@ import {PopulatePropertyTable1706946822911} from "./migrations/1706946822911-Pop
 const logger: Logger = new Logger("typeorm.config.ts")
 config({path: ".env/local.env"})
 
-const configService = new ConfigService();
+const configService = new ConfigService({expandVariables: true});
 
 // logger.log(getData(configService));
 
