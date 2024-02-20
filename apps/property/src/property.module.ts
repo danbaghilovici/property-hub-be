@@ -7,12 +7,12 @@ import {Type} from "../../../libs/shared/src/entities/type.entity";
 import {Status} from "../../../libs/shared/src/entities/status.entity";
 
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {AuthModule} from "@app/auth";
+import {AuthenticationModule} from "../../../libs/authentication/src";
 
 @Module({
   imports: [
       SharedModule,
-      AuthModule,
+      AuthenticationModule,
       TypeOrmModule.forFeature([Property,Type,Status])
   ],
   controllers: [PropertyController],

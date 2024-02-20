@@ -8,9 +8,9 @@ import {DecodingURIPipe} from "@app/shared/pipes/decoding/decode-uri-pipe.servic
 import {ParseJsonPipe} from "@app/shared/pipes/parse-json/parse-json.pipe";
 import {Status} from "../../../libs/shared/src/entities/status.entity";
 import {CreatePropertyDTO} from "./dto/CreatePropertyDTO";
-import {AuthGuard} from "../../../libs/auth/guards/auth/auth.guard";
+import {AuthenticationGuard} from "../../../libs/authentication/guards/authentication/authentication.guard";
 
-@UseGuards(AuthGuard)
+@UseGuards(AuthenticationGuard)
 @Controller("properties")
 export class PropertyController {
 

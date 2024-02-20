@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import {CognitoService} from "@app/auth/cognito.service";
+
 import {defer, Observable, of, switchMap} from "rxjs";
-import {AuthRegisterUserDto} from "@app/auth/models/auth.register.user.dto";
+import {CognitoService} from "./cognito.service";
+import {AuthRegisterUserDto} from "./models/auth.register.user.dto";
+
 
 @Injectable()
-export class AuthService {
+export class AuthenticationService {
 
     constructor(private readonly cognitoService:CognitoService){}
 
