@@ -15,6 +15,11 @@ locals {
       function_name = "get_properties"
       handler       = "dist/apps/property/property.handler"
     }
+    "get_properties" = {
+      route_key     = "POST /properties"
+      function_name = "post_properties"
+      handler       = "dist/apps/property/property.handler"
+    }
     "get_agents" = {
       route_key     = "GET /agents"
       function_name = "get_agents"
