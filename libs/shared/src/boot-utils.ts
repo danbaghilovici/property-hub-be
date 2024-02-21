@@ -1,4 +1,4 @@
-import {APIGatewayProxyEventV2, Context, Handler} from "aws-lambda";
+
 import {
     catchError,
     concatMap,
@@ -21,6 +21,7 @@ import express, {Express} from "express";
 import {configure as serverlessExpress} from "@codegenie/serverless-express";
 import * as core from "express-serve-static-core";
 import {cors} from "cors"
+import {APIGatewayProxyEventV2, Context, Handler} from "aws-lambda";
 
 const LOGGER:Logger=new Logger("boot-utils.ts")
 declare global {
