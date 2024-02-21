@@ -48,7 +48,7 @@ module "lambda" {
   db_port                 = module.database.db_instance.port
   db_username             = module.database.db_instance.username
   db_password             = module.database.db_instance.password
-  aws_region = data.aws_region
+  aws_region = data.aws_region.current.name
 
   user_pool = module.auth.cognito_user_pool
   client_id = module.auth.cognito_pool_app_client
@@ -130,3 +130,6 @@ resource "aws_cloudwatch_log_group" "property_hub_backend_api_gateway_log_group"
 #  value = module.auth.cognito_pool_app_client.value
 #  sensitive = true
 #}
+output "current_region" {
+  value = data.aws_region.current.name
+}
