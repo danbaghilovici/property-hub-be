@@ -1,3 +1,5 @@
+data "aws_region" "current" {}
+
 resource "aws_iam_policy" "property_hub_backend_iam_policy" {
   # defines an IAM policy that allows Lambda to write logs to CloudWatch Logs.
   name = "property_hub-logs-${terraform.workspace}"
@@ -46,6 +48,7 @@ module "lambda" {
   db_port                 = module.database.db_instance.port
   db_username             = module.database.db_instance.username
   db_password             = module.database.db_instance.password
+  aws_region = data.aws_region
 
   user_pool = module.auth.cognito_user_pool
   client_id = module.auth.cognito_pool_app_client

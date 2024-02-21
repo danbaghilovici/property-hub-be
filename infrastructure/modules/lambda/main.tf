@@ -38,7 +38,8 @@ resource "aws_lambda_function" "property_hub_backend_lambda" {
     AWS_DATABASE_USERNAME:var.db_username,
     AWS_DATABASE_PASSWORD:var.db_password,
     AWS_AUTH_USER_POOL:var.user_pool,
-    AWS_AUTH_CLIENT_ID:var.client_id
+    AWS_AUTH_CLIENT_ID:var.client_id,
+    AWS_AUTH_AUTHORITY: "https://cognito-idp.${var.aws_region}.amazonaws.com/${var.user_pool}"
   } }
 
   publish     = true

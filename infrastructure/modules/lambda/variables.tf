@@ -84,3 +84,10 @@ variable "client_id" {
   sensitive=true
   description = ""
 }
+
+variable "aws_region" {
+  type = string
+  sensitive=true
+  description = ""
+  default = "eu-central-1"
+}
