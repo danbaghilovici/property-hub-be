@@ -1,9 +1,14 @@
 locals {
   lambdas = {
-    "add_gateway" = {
-      route_key     = "POST /gateway"
-      function_name = "add_gateway"
-      handler       = "dist/apps/gateway/gateway.handler"
+    "auth_register" = {
+      route_key     = "POST /register"
+      function_name = "auth_register"
+      handler       = "dist/apps/auth/auth.handler"
+    },
+    "auth_login" = {
+      route_key     = "POST /login"
+      function_name = "auth_login"
+      handler       = "dist/apps/auth/auth.handler"
     },
     "get_properties_single" = {
       route_key     = "GET /properties/{id}"
