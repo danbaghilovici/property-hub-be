@@ -16,6 +16,11 @@ export class PropertyController {
   private readonly logger:Logger=new Logger(PropertyController.name);
   constructor(private readonly propertyService: PropertyService) {}
 
+  @Get(":id")
+  getProperty(@Param('id',ParseIntPipe) id:number){
+    return null;
+  }
+
   @Get()
   getProperties(
       @Query("filters",DecodingURIPipe,ParseJsonPipe) propertiesFiltersDto:PropertiesFiltersDto)
