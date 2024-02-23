@@ -1,12 +1,12 @@
 locals {
   lambdas = {
     "auth_register" = {
-      route_key     = "POST /register"
+      route_key     = "POST /auth/register"
       function_name = "auth_register"
       handler       = "dist/apps/auth/auth.handler"
     },
     "auth_login" = {
-      route_key     = "POST /login"
+      route_key     = "POST /auth/login"
       function_name = "auth_login"
       handler       = "dist/apps/auth/auth.handler"
     },
