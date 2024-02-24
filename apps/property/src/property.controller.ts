@@ -9,6 +9,7 @@ import {ParseJsonPipe} from "@app/shared/pipes/parse-json/parse-json.pipe";
 import {Status} from "../../../libs/shared/src/entities/status.entity";
 import {CreatePropertyDTO} from "./dto/CreatePropertyDTO";
 import {AuthGuard} from "@nestjs/passport";
+import {TestDto} from "../../auth/src/test.dto";
 
 @Controller("properties")
 export class PropertyController {
@@ -43,5 +44,10 @@ export class PropertyController {
   @Get("statuses")
   getPropertyStatuses():Observable<Status[]>{
     return this.propertyService.getAvailablePropertyStatuses();
+  }
+
+  @Post("test")
+  test(@Body() test:TestDto){
+    return null;
   }
 }

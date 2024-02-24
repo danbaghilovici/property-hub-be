@@ -5,7 +5,10 @@ import {AuthenticationModule} from "../../../libs/authentication/src";
 import {SharedModule} from "@app/shared";
 
 @Module({
-  imports: [SharedModule, AuthenticationModule],
+  imports: [
+      SharedModule,
+    AuthenticationModule
+  ],
   controllers: [AuthController],
   providers: [AuthService],
 })

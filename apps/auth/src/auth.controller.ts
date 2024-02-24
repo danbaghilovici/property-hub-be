@@ -1,9 +1,15 @@
-import {Body, Controller, Get, Logger, Post, UseGuards} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Logger,
+  Post
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {AuthRegisterUserDto} from "../../../libs/authentication/src/models/auth.register.user.dto";
-import {AuthLoginUserDto} from "../../../libs/authentication/src/models/auth.login.user.dto";
-import {AuthGuard} from "@nestjs/passport";
 import {ConfigService} from "@nestjs/config";
+import {Observable} from "rxjs";
+import {AuthResponseTokenDto} from "../../../libs/authentication/src/models/auth.response.token.dto";
+import {TestDto} from "./test.dto";
 
 @Controller("auth")
 export class AuthController {
@@ -18,15 +24,21 @@ export class AuthController {
     return this.authService.createNewUser(authData);
   }
 
-  @Post("login")
-  authenticateUser(@Body() authData:AuthLoginUserDto){
-    return this.authService.authenticateUser(authData);
+  @Post("test")
+  authenticateUser(@Body() authData:TestDto) : Observable<AuthResponseTokenDto>{
+    this.logger.debug(JSON.stringify(authData));
+    return null;
+    // if (!authData){
+    //   this.logger.error("failed");
+    //   throw new BadRequestException();
+    // }
+    // return this.authService.authenticateUser(authData);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Get("test")
-  test(){
-    this.logger.log("ici");
-    return null;
-  }
+  // @UseGuards(AuthGuard('jwt'))
+  // @Get("test")
+  // test(){
+  //   this.logger.log("ici");
+  //   return null;
+  // }
 }

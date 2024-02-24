@@ -16,6 +16,7 @@
       "entryFile": "index",
       "sourceRoot": "libs/shared/src",
       "compilerOptions": {
+        "webpack": true,
         "tsConfigPath": "libs/shared/tsconfig.lib.json"
       }
     },
@@ -25,6 +26,7 @@
       "entryFile": "property",
       "sourceRoot": "apps/property/src",
       "compilerOptions": {
+        "webpack": true,
         "tsConfigPath": "apps/property/tsconfig.app.json"
       }
     },
@@ -34,6 +36,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/gateway/src",
       "compilerOptions": {
+        "webpack": true,
         "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
     },
@@ -43,6 +46,7 @@
       "entryFile": "agent",
       "sourceRoot": "apps/agent/src",
       "compilerOptions": {
+        "webpack": true,
         "tsConfigPath": "apps/agent/tsconfig.app.json"
       }
     },
@@ -52,7 +56,18 @@
       "entryFile": "auth",
       "sourceRoot": "apps/auth/src",
       "compilerOptions": {
+        "webpack": true,
         "tsConfigPath": "apps/auth/tsconfig.app.json"
+      }
+    },
+    "test": {
+      "type": "application",
+      "root": "apps/test",
+      "entryFile": "main",
+      "sourceRoot": "apps/test/src",
+      "compilerOptions": {
+        "webpack": true,
+        "tsConfigPath": "apps/test/tsconfig.app.json"
       }
     }
   }
