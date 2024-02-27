@@ -26,7 +26,7 @@ resource "aws_db_instance" "postgres_instance" {
   engine_version       = "15.5"
   parameter_group_name = "default.postgres15"
 
-  db_name  = "propertyhub"
+  db_name  = "postgres"
   username = "postgres"
   password = "postgres"
 
