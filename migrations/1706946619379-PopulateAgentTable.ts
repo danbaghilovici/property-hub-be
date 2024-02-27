@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import {Feature} from "@app/shared/entities/feature.entity";
+import {Feature} from "../libs/database/src/entities/feature.entity";
 import {fsReadFile} from "ts-loader/dist/utils";
 import {Logger} from "@nestjs/common";
-import {Agent} from "../libs/shared/src/entities/agent.entity";
+import {Agent} from "../libs/database/src/entities/agent.entity";
 
 export class PopulateAgentTable1706946619379 implements MigrationInterface {
 

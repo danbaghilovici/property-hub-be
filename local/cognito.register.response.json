@@ -1,0 +1,25 @@
+{
+  "user": {
+    "username": "yepibo6606@ricorit.com",
+    "pool": {
+      "userPoolId": "eu-central-1_LnZ0ikaPK",
+      "clientId": "736jmu1cl09tq8l8vl6t5hm337",
+      "client": {
+        "endpoint": "https://cognito-idp.eu-central-1.amazonaws.com/",
+        "fetchOptions": {}
+      },
+      "advancedSecurityDataCollectionFlag": true
+    },
+    "Session": null,
+    "client": {
+      "endpoint": "https://cognito-idp.eu-central-1.amazonaws.com/",
+      "fetchOptions": {}
+    },
+    "signInUserSession": null,
+    "authenticationFlowType": "USER_SRP_AUTH",
+    "keyPrefix": "CognitoIdentityServiceProvider.736jmu1cl09tq8l8vl6t5hm337",
+    "userDataKey": "CognitoIdentityServiceProvider.736jmu1cl09tq8l8vl6t5hm337.yepibo6606@ricorit.com.userData"
+  },
+  "userConfirmed": false,
+  "userSub": "4fc4c9fe-34b0-4ae1-98c4-5b5ef12ff8cd"
+}

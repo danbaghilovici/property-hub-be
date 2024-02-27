@@ -1,6 +1,6 @@
 import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Exclude, plainToClass} from "class-transformer";
-import {Property} from "../entities/property.entity";
+import {Property} from "./property.entity";
 
 @Entity()
 export class Agent {

@@ -1,4 +1,4 @@
-import {APIGatewayProxyEventV2, Context, Handler} from "aws-lambda";
+
 import {
     catchError,
     concatMap,
@@ -21,6 +21,7 @@ import express, {Express} from "express";
 import {configure as serverlessExpress} from "@codegenie/serverless-express";
 import * as core from "express-serve-static-core";
 import {cors} from "cors"
+import {APIGatewayProxyEventV2, Context, Handler} from "aws-lambda";
 
 const LOGGER:Logger=new Logger("boot-utils.ts")
 declare global {
@@ -37,26 +38,6 @@ export function printHandlerEvents(event: APIGatewayProxyEventV2, context: Conte
     return of({});
 }
 
-export function createAppFromModuleAsync(moduleCls: any, options: NestApplicationContextOptions = getDefaultApplicationOptions()):Observable<INestApplicationContext> {
-    if (!global.cachedApp) {
-        // config({path:".env/local.env"});
-        LOGGER.log("Initializing app");
-        return defer(()=>NestFactory.createApplicationContext(moduleCls, options))
-            .pipe(switchMap((app)=>{
-                    return defer(()=>app.init());
-                }),
-                switchMap((app)=>{
-                    global.cachedApp = app;
-                    return of(app);
-                }),
-                catchError((error)=> {
-                    console.error(error);
-                    return EMPTY;
-                }))
-    }
-    return of(global.cachedApp);
-}
-
 function configureNestApplication(nestApp: INestApplication):Observable<INestApplication<any>> {
     nestApp.enableCors({
         origin:"*",
@@ -67,11 +48,17 @@ function configureNestApplication(nestApp: INestApplication):Observable<INestApp
     });
     LOGGER.log("setting global prefix to '"+process.env.WORKSPACE+"'");
     nestApp.setGlobalPrefix(process.env.WORKSPACE);
-    nestApp.useGlobalPipes(new ValidationPipe({
-        enableDebugMessages:true,
-        disableErrorMessages:false,
-        transform:true,
-    }));
+    nestApp.useGlobalPipes(
+        new ValidationPipe(
+        {
+            // exceptionFactory:(err)=>{console.log(err);return err},
+            enableDebugMessages:true,
+            disableErrorMessages:false,
+            transform:true,
+            whitelist:true
+        }
+    )
+    );
     return of(nestApp);
 
 }
@@ -91,7 +78,7 @@ function generateHandler(nestApp:INestApplication):Observable<Handler> {
 
 function generateNestApplication(moduleCls: any, options: NestApplicationContextOptions) :
     Observable<INestApplication>{
-    return defer(() => NestFactory.create(moduleCls, options));
+    return defer(() => NestFactory.create(moduleCls, {...options,bodyParser:true}));
 }
 
 export function createOrGetLambdaHandler(
@@ -120,7 +107,10 @@ export function createNestApplication(
         .pipe(
             switchMap((nestApp:INestApplication<any>)=>configureNestApplication(nestApp)),
             switchMap((nestApp:INestApplication<any>)=>initNestApplication(nestApp)),
-            switchMap((nestApp:INestApplication<any>)=>keepAlive?defer(()=>nestApp.listen(3001)):of(nestApp)));
+            switchMap((nestApp:INestApplication<any>)=>
+                keepAlive
+                    ? defer(()=>nestApp.listen(3001,()=>LOGGER.verbose(`Started on ${ 3001 }`)))
+                    :of(nestApp)))
 
 }
 
@@ -128,7 +118,9 @@ export function createNestApplication(
 
 
 export function getDefaultApplicationOptions(): NestApplicationContextOptions{
-    return {logger:process.env.AWS_EXECUTION_ENV==="LOCAL"?LOGGER:console};
+    return {
+        logger:process.env.AWS_EXECUTION_ENV==="LOCAL"?LOGGER:console
+    };
 }
 
 export function handleRequest(event:any,context:Context,callback:any,moduleCls:any):Promise<any>{
@@ -149,5 +141,6 @@ function boot(modelCls:any) {
     createNestApplication(modelCls,getDefaultApplicationOptions(),true).subscribe();
 }
 export function handleBooting(moduleCls:any){
+    console.log(process.env.AWS_EXECUTION_ENV);
     process.env.AWS_EXECUTION_ENV === "LOCAL" ? boot(moduleCls) : LOGGER.log("No need to boot");
 }

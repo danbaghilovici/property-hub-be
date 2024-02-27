@@ -10,10 +10,10 @@ import {
     ManyToMany, JoinColumn
 } from 'typeorm';
 import {Exclude, plainToClass} from "class-transformer";
-import {Agent} from "../entities/agent.entity";
+import {Agent} from "./agent.entity";
 import {Type} from "./type.entity";
 import {Status} from "./status.entity";
-import {Feature} from "../entities/feature.entity";
+import {Feature} from "./feature.entity";
 
 @Entity()
 export class Property {

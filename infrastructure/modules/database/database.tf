@@ -23,10 +23,10 @@ resource "aws_db_instance" "postgres_instance" {
   instance_class       = "db.t3.micro"
   identifier           = "db-${terraform.workspace}"
   engine               = "postgres"
-  engine_version       = "15.4"
+  engine_version       = "15.5"
   parameter_group_name = "default.postgres15"
 
-  db_name  = "propertyhub"
+  db_name  = "postgres"
   username = "postgres"
   password = "postgres"
 

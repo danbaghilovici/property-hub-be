@@ -1,5 +1,5 @@
 import {Column, Entity, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
-import {Property} from "../entities/property.entity";
+import {Property} from "./property.entity";
 
 
 @Entity()

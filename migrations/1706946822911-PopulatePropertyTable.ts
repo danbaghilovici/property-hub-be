@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import {Agent} from "@app/shared/entities/agent.entity";
+import {Agent} from "../libs/database/src/entities/agent.entity";
 import {fsReadFile} from "ts-loader/dist/utils";
-import {Property} from "../libs/shared/src/entities/property.entity";
+import {Property} from "../libs/database/src/entities/property.entity";
 import {Logger} from "@nestjs/common";
-import {Status} from "../libs/shared/src/entities/status.entity";
-import {Type} from "../libs/shared/src/entities/type.entity";
+import {Status} from "../libs/database/src/entities/status.entity";
+import {Type} from "../libs/database/src/entities/type.entity";
 import {plainToClass} from "class-transformer";
-import {Feature} from "../libs/shared/src/entities/feature.entity";
+import {Feature} from "../libs/database/src/entities/feature.entity";
 
 export class PopulatePropertyTable1706946822911 implements MigrationInterface {
 

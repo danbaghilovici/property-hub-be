@@ -1,7 +1,7 @@
 import {Controller, Get, Logger, NotFoundException, Param, ParseIntPipe} from '@nestjs/common';
 import { AgentService } from './agent.service';
 import {Observable, tap} from "rxjs";
-import {Agent} from "../../../libs/shared/src/entities/agent.entity";
+import {Agent} from "../../../libs/database/src/entities/agent.entity";
 
 @Controller("agents")
 export class AgentController {
