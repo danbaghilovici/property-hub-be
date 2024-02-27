@@ -122,12 +122,12 @@ output "database_host" {
 }
 
 output "auth_pool" {
-  value = module.auth.cognito_user_pool.value
+  value = module.auth.cognito_user_pool
   sensitive = true
 }
 
 output "auth_client" {
-  value = module.auth.cognito_pool_app_client.value
+  value = module.auth.cognito_pool_app_client
   sensitive = true
 }
 output "current_region" {
