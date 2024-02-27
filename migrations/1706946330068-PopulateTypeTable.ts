@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import {Logger} from "@nestjs/common";
 import {fsReadFile} from "ts-loader/dist/utils";
-import {Type} from "../libs/shared/src/entities/type.entity";
+import {Type} from "../libs/database/src/entities/type.entity";
 
 export class PopulateTypeTable1706946330068 implements MigrationInterface {
 

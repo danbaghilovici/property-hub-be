@@ -15,8 +15,7 @@ import {TestDto} from "./test.dto";
 export class AuthController {
 
   private readonly logger = new Logger(AuthController.name);
-  constructor(private readonly authService: AuthService, private readonly config:ConfigService) {
-    this.logger.debug(this.config.getOrThrow("AWS_AUTH_AUTHORITY"));
+  constructor(private readonly authService: AuthService) {
   }
 
   @Post("register")

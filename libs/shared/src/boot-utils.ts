@@ -107,7 +107,10 @@ export function createNestApplication(
         .pipe(
             switchMap((nestApp:INestApplication<any>)=>configureNestApplication(nestApp)),
             switchMap((nestApp:INestApplication<any>)=>initNestApplication(nestApp)),
-            switchMap((nestApp:INestApplication<any>)=>keepAlive?defer(()=>nestApp.listen(3001)):of(nestApp)));
+            switchMap((nestApp:INestApplication<any>)=>
+                keepAlive
+                    ? defer(()=>nestApp.listen(3001,()=>LOGGER.verbose(`Started on ${ 3001 }`)))
+                    :of(nestApp)))
 
 }
 

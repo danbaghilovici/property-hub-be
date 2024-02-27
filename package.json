@@ -50,7 +50,7 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.11.3",
-    "reflect-metadata": "^0.1.13",
+    "reflect-metadata": "^0.2",
     "rxjs": "^7.2.0",
     "ts-loader": "^9.2.3",
     "typeorm": "^0.3.17"
@@ -104,7 +104,8 @@
     ],
     "moduleNameMapper": {
       "^@app/shared(|/.*)$": "<rootDir>/libs/shared/src/$1",
-      "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1"
+      "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1",
+      "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1"
     }
   }
 }

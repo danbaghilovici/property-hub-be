@@ -1,17 +1,17 @@
 import {Injectable, Logger,} from '@nestjs/common';
 import {Between, DataSource, FindOptionsWhereProperty, In, Repository} from "typeorm";
-import {Property} from "../../../libs/shared/src/entities/property.entity";
+import {Property} from "../../../libs/database/src/entities/property.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {catchError, concat, concatMap, defer, Observable, of, skip, switchMap} from "rxjs";
 
 import {PropertiesFiltersDto} from "./property-filters.dto";
 import {FindOptionsWhere} from "typeorm/find-options/FindOptionsWhere";
 import {FindManyOptions} from "typeorm/find-options/FindManyOptions";
-import {Type} from "../../../libs/shared/src/entities/type.entity";
-import {Status} from "../../../libs/shared/src/entities/status.entity";
+import {Type} from "../../../libs/database/src/entities/type.entity";
+import {Status} from "../../../libs/database/src/entities/status.entity";
 import {CreatePropertyDTO} from "./dto/CreatePropertyDTO";
-import {Agent} from "@app/shared/entities/agent.entity";
-import {Feature} from "../../../libs/shared/src/entities/feature.entity";
+import {Agent} from "@app/shared/../../../libs/database/src/entities/agent.entity";
+import {Feature} from "../../../libs/database/src/entities/feature.entity";
 
 @Injectable()
 export class PropertyService {

@@ -60,14 +60,13 @@
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     },
-    "test": {
-      "type": "application",
-      "root": "apps/test",
-      "entryFile": "main",
-      "sourceRoot": "apps/test/src",
+    "database": {
+      "type": "library",
+      "root": "libs/database",
+      "entryFile": "index",
+      "sourceRoot": "libs/database/src",
       "compilerOptions": {
-        "webpack": true,
-        "tsConfigPath": "apps/test/tsconfig.app.json"
+        "tsConfigPath": "libs/database/tsconfig.lib.json"
       }
     }
   }

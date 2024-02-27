@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import {fsReadFile} from "ts-loader/dist/utils";
-import {Feature} from "../libs/shared/src/entities/feature.entity";
+import {Feature} from "../libs/database/src/entities/feature.entity";
 import {Logger} from "@nestjs/common";
 
 export class PopulateFeatureTable1706946481708 implements MigrationInterface {

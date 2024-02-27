@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import {Logger} from "@nestjs/common";
-import {Status} from "../libs/shared/src/entities/status.entity";
+import {Status} from "../libs/database/src/entities/status.entity";
 import {fsReadFile} from "ts-loader/dist/utils";
 import {plainToClass} from "class-transformer";
 

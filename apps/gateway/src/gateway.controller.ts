@@ -1,14 +1,7 @@
-import {Controller, Get, Logger, NotFoundException, Post, Req, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Get, Logger, NotFoundException, Post, Req, UseInterceptors} from '@nestjs/common';
 import { GatewayService } from './gateway.service';
-import {Request} from "express";
-import {Property} from "../../../libs/shared/src/entities/property.entity";
-import {NotFoundInterceptor} from "@app/shared/not-found/not-found.interceptor";
-import {LoggingInterceptor} from "@app/shared/logging/logging.interceptor";
-// import {NotFoundInterceptor} from "@app/shared/not-found/not-found.interceptor";
+import {PayloadDto} from "./payload.dto";
 
-
-// @UseInterceptors(NotFoundInterceptor)
-// @UseInterceptors(LoggingInterceptor)
 @Controller("gateway")
 export class GatewayController {
 
@@ -29,7 +22,7 @@ export class GatewayController {
   }
 
   @Post()
-  getHelloEmptyPost(): string {
+  getHelloEmptyPost(@Body() x:PayloadDto): string {
     return "post";
     // return new PropertyEntity(1,"asd","asd");
   }
