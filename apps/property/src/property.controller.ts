@@ -49,6 +49,6 @@ export class PropertyController {
 
   @Post("test")
   test(@Body() test:TestDto){
-    return null;
+    return "ceva"
   }
 }
