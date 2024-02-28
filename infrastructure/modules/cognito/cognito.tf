@@ -1,6 +1,11 @@
 
 resource "aws_cognito_user_pool" "property-hub-be-pool" {
   name = "property-hub-be-pool-${terraform.workspace}"
+  schema {
+    attribute_data_type = "String"
+    required = true
+    name                = "userType"
+  }
 }
 
 resource "aws_cognito_user_pool_client" "property-hub-be-cognito-client" {

@@ -1,15 +1,17 @@
 import {
   Body,
-  Controller,
+  Controller, Get,
   Logger,
   Post
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import {AuthRegisterUserDto} from "../../../libs/authentication/src/models/auth.register.user.dto";
+import {AuthRequestRegisterUserDto} from "../../../libs/authentication/src/models/auth.request.register.user.dto";
 import {ConfigService} from "@nestjs/config";
 import {Observable} from "rxjs";
 import {AuthResponseTokenDto} from "../../../libs/authentication/src/models/auth.response.token.dto";
 import {TestDto} from "./test.dto";
+import {UserTypeDto} from "../../../libs/authentication/src/models/user.type.dto";
+import {AuthResponseRegisterUserDto} from "../../../libs/authentication/src/models/auth.response.register.user.dto";
 
 @Controller("auth")
 export class AuthController {
@@ -19,7 +21,7 @@ export class AuthController {
   }
 
   @Post("register")
-  createNewUser(@Body() authData:AuthRegisterUserDto){
+  createNewUser(@Body() authData:AuthRequestRegisterUserDto):Observable<AuthResponseRegisterUserDto>{
     return this.authService.createNewUser(authData);
   }
 
@@ -34,10 +36,9 @@ export class AuthController {
     // return this.authService.authenticateUser(authData);
   }
 
-  // @UseGuards(AuthGuard('jwt'))
-  // @Get("test")
-  // test(){
-  //   this.logger.log("ici");
-  //   return null;
-  // }
+  @Get("types")
+  userTypes(): UserTypeDto[] {
+    return this.authService.getUserTypes();
+  }
+
 }

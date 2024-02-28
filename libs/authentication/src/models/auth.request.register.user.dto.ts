@@ -1,6 +1,10 @@
-import {IsEmail, IsString, Matches} from "class-validator";
+import {IsEmail, IsInt, IsString, Matches} from "class-validator";
 
-export class AuthRegisterUserDto {
+export class AuthRequestRegisterUserDto {
+
+    @IsInt()
+    userTypeId:number;
+
     @IsString()
     name: string;
 

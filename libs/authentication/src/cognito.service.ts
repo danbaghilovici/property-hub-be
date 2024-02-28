@@ -7,9 +7,10 @@ import {
     ISignUpResult
 } from "amazon-cognito-identity-js";
 import {ConfigService} from "@nestjs/config";
-import {AuthRegisterUserDto} from "./models/auth.register.user.dto";
+import {AuthRequestRegisterUserDto} from "./models/auth.request.register.user.dto";
 import {AuthLoginUserDto} from "./models/auth.login.user.dto";
 import {AuthResponseTokenDto} from "./models/auth.response.token.dto";
+import {UserTypeDto} from "./models/user.type.dto";
 
 @Injectable()
 export class CognitoService {
@@ -22,13 +23,12 @@ export class CognitoService {
         });
     }
 
-    public registerUser(authRegisterUserDto:AuthRegisterUserDto):Promise<ISignUpResult>{
-        const { name, email, password } = authRegisterUserDto;
+    public registerUser(authRegisterUserDto:AuthRequestRegisterUserDto, userType:UserTypeDto):Promise<ISignUpResult>{
         return new Promise<ISignUpResult>((resolve, reject) => {
             this.userPool.signUp(
-                email,
-                password,
-                [new CognitoUserAttribute({Name: 'name', Value: name,})],
+                authRegisterUserDto.email,
+                authRegisterUserDto.password,
+                [new CognitoUserAttribute({Name: 'userType', Value:userType.id+"",})],
                 null,
                 (err, result) => {
                     if (!result || err) {
