@@ -4,6 +4,8 @@ resource "aws_cognito_user_pool" "property-hub-be-pool" {
   schema {
     attribute_data_type = "String"
     required = true
+    developer_only_attribute = false
+    mutable = false
     name                = "userType"
   }
 }
