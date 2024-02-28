@@ -3,7 +3,7 @@ resource "aws_cognito_user_pool" "property-hub-be-pool" {
   name = "property-hub-be-pool-${terraform.workspace}"
   schema {
     attribute_data_type = "String"
-    required = true
+    required = false
     developer_only_attribute = false
     mutable = false
     name                = "userType"
