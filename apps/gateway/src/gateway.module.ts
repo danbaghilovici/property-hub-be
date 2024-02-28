@@ -4,14 +4,20 @@ import { GatewayService } from './gateway.service';
 import {SharedModule} from "@app/shared";
 import {AuthenticationModule} from "../../../libs/authentication/src";
 import {DatabaseModule} from "@app/database";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {Property} from "@app/database/entities/property.entity";
+import {AuthModule} from "../../auth/src/auth.module";
+import {AgentModule} from "../../agent/src/agent.module";
+import {PropertyModule} from "../../property/src/property.module";
 
 @Module({
   imports: [
-    SharedModule,AuthenticationModule, DatabaseModule,
-      TypeOrmModule.forFeature([Property])
+    SharedModule,
+    AuthenticationModule,
+    DatabaseModule,
+    AuthModule,
+    AgentModule,
+    PropertyModule
   ],
+  exports: [],
   controllers: [GatewayController],
   providers: [GatewayService],
 })

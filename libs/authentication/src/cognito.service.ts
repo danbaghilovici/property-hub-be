@@ -28,7 +28,7 @@ export class CognitoService {
             this.userPool.signUp(
                 authRegisterUserDto.email,
                 authRegisterUserDto.password,
-                [new CognitoUserAttribute({Name: 'userType', Value:userType.id+"",})],
+                [new CognitoUserAttribute({Name: 'custom:userType', Value:userType.id+"",})],
                 null,
                 (err, result) => {
                     if (!result || err) {
