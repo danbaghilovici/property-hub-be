@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build shared && nest build authentication && nest build property && nest build agent && nest build auth && nest build gateway",
+    "build": "nest build shared && nest build authentication && nest build property && nest build agent && nest build auth",
     "zip": "./create_lambda_zip.sh",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
